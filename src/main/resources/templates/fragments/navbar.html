@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+
+<body>
+
+<nav
+        th:fragment="navbar"
+        class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="/"><img alt="arch picture" src="/images/architect.png" class="logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav active mr-auto col-10 justify-content-between">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <!--        <li class="nav-item" sec:authorize="isAuthenticated()">-->
+            <li class="nav-item">
+                <a class="nav-link" id="nav-projects" href="/">Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/project/add">Add Project</a>
+            </li>
+
+            <!--        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">-->
+<!--            <li class="nav-item dropdown">-->
+<!--                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"-->
+<!--                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                    Admin-->
+<!--                </a>-->
+<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                    <a class="dropdown-item" href="/arch-types">Add Arch Type</a>-->
+<!--                </div>-->
+<!--            </li>-->
+
+            <!--        <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--            <li class="nav-item">-->
+<!--                <div class="form-inline my-2 my-lg-0 border px-3">-->
+<!--                    <div class="logged-user">-->
+<!--                        Welcome,-->
+<!--                        <th:block sec:authentication="name"></th:block>!-->
+<!--                        Welcome, Bai Arch!-->
+<!--                    </div>-->
+<!--                    <form th:method="post"-->
+<!--                          th:action="@{/users/logout}">-->
+<!--                        <input type="submit" class="btn btn-link" value="Logout"/>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </li>-->
+
+            <!--        <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+            <li class="nav-item">
+                <a class="nav-link" href="/users/register">Register</a>
+            </li>
+            <!--        <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+            <li class="nav-item">
+                <a class="nav-link" href="/users/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   th:method="post"
+                   th:href="@{/users/logout}">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+</body>
+</html>
