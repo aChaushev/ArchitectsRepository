@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}">
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center text-white">Upload Project</h2>
+    <form th:method="POST"
+          th:action="@{/project/add}"
+          th:object="${projectAddDTO}"
+          class="main-form mt-5  mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <div class="row">
+            <!-- Name -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="name" class="text-white font-weight-bold">Project Name</label>
+                <input id="name"
+                       th:field="*{name}"
+                       th:errorclass="'bg-warning'"
+                       type="text"
+                       class="form-control"
+                       placeholder="Name"/>
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('name')}"
+                   th:errors="*{name}"
+                > Name error message
+                </p>
+            </div>
+            <!-- EO: Name -->
+
+            <!-- Project Type -->
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="typeName">Project Type</label>
+                <select id="typeName"
+                        th:field="*{typeName}"
+                        th:errorclass="'bg-warning'"
+                        class="form-control">
+                    <option value="">- Select project type -</option>
+                    <option th:each="arhType: ${allArchTypes}"
+                            th:text="${arhType.name()}"
+                            th:value="${arhType}"
+                    >Project Type
+                    </option>
+
+                </select>
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('typeName')}"
+                   th:errors="*{typeName}"
+                > Project Type error message
+                </p>
+            </div>
+            <!-- EO: Project Type -->
+        </div>
+
+        <div class="row">
+            <!-- Input Date -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="inputDate" class="text-white font-weight-bold">Set Date</label>
+                <input id="inputDate"
+                       type="date"
+                       class="form-control"
+                       placeholder="Project creation date"
+                       th:field="*{inputDate}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('inputDate')}"
+                   th:errors="*{inputDate}"
+                > Creation date required.
+                </p>
+            </div>
+            <!-- EO: Input Date -->
+
+            <!-- Price -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="price" class="text-white font-weight-bold">Price</label>
+                <input id="price"
+                       type="number"
+                       class="form-control"
+                       placeholder="Suggested price"
+                       th:field="*{price}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}"
+                > Suggested price is required.
+                </p>
+            </div>
+            <!-- EO: Price -->
+        </div>
+
+        <!-- Image URL -->
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="imageURL">Image URL</label>
+            <input id="imageURL"
+                   type="text"
+                   name="imageURL"
+                   class="form-control"
+                   placeholder="Put project image URL here"
+                   th:field="*{imageURL}"
+                   th:errorclass="'bg-warning'"
+            >
+            <p class="errors alert alert-danger"
+               th:if="${#fields.hasErrors('imageURL')}"
+               th:errors="*{imageURL}"
+            > Project image URL is required.
+            </p>
+        </div>
+        <!-- EO: Image URL -->
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="description">Description</label>
+                <textarea id="description"
+                          type="textarea"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Description"
+                          th:field="*{description}"
+                          th:errorclass="'bg-warning'"
+                >
+                </textarea>
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('description')}"
+                   th:errors="*{description}"
+                > Description is required.
+                </p>
+            </div>
+            <!-- EO: Description -->
+
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="button-holder d-flex justify-content-center">
+                        <input type="submit" class="btn btn-info btn-lg" value="Submit Project"/>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>
