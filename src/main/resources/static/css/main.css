@@ -1,24 +1,32 @@
 body {
-     background-image: url('/images/1-back.jpg');
-     background-position: center center;
-     background-repeat: no-repeat;
-     background-attachment: fixed;
-     background-size: cover;
-     background-color: #464646;
+    background-image: url('/images/1-back.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
 
-     font-family: "Oswald", sans-serif;
-     font-optical-sizing: auto;
-     font-weight: 200;
-     font-style: normal;
-     font-size: large;
-     letter-spacing: 0.1rem;
-     text-transform: uppercase;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-size: large;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
 
- }
+}
 
 .navbar {
-     background-image: linear-gradient(to bottom, rgba(40, 40, 40, 0.8), rgba(90, 90, 90, 0.8));
+    background-image: linear-gradient(to bottom, rgba(40, 40, 40, 0.8), rgba(90, 90, 90, 0.8));
 }
+
+.active {
+    color: #fd7e14 !important;
+}
+
+/*.navbar .nav-item .nav-link {*/
+/*
+/*}*/
 
 /*.navbar {*/
 /*     overflow: hidden;*/
@@ -29,58 +37,153 @@ body {
 /*}*/
 
 .navbar .logo {
-     margin-left: 20px;
-     max-height: 80px;
-     padding-right: 160px;
+    margin-left: 20px;
+    max-height: 80px;
+    padding-right: 160px;
 }
 
-/*.navbar .nav-item .nav-link:active {*/
-/*     color: #fd7e14*/
-/*}*/
-
-
-.container .collapse .container-fluid {
-     padding-top: 90px;
+.container {
+    padding-top: 4.5rem;
 }
 
 .bg-text {
-     background-color: rgb(0,0,0); /* Fallback color */
-     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-     color: white;
-     font-weight: bold;
-     border: 3px solid #f1f1f1;
-     z-index: 2;
-     width: 80%;
-     padding: 20px;
-     text-align: center;
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    z-index: 2;
+    width: 80%;
+    padding: 20px;
+    text-align: center;
 }
 
-.brand-section {
-     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
-}
+/*.brand-section {*/
+/*    background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));*/
+/*}*/
 
 td, th {
-     padding: 3px 8px;
+    padding: 3px 8px;
 }
 
-.card.offer, .offer-details .list-group-item {
-     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
-}
-.card-img-top-wrapper {
-     height: 150px;
-     overflow:hidden;
-}
+/*.card.offer, .offer-details .list-group-item {*/
+/*    background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));*/
+/*}*/
+
+/*.card-img-top-wrapper {*/
+/*    height: 150px;*/
+/*    overflow: hidden;*/
+/*}*/
 
 form.main-form {
-     background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
-     padding:10px 30px;
-     border-radius: 5px;
+    background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
+    padding: 10px 30px;
+    border-radius: 5px;
 }
 
 .field-error {
-     background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="red" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg> ') no-repeat top right/30px 30px;
+    background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="red" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"/></svg> ') no-repeat top right/30px 30px;
 }
 
 .logged-user {
-     color: white;
+    color: white;
+}
+
+.errors {
+    text-align: center;
+    font-size: 0.9rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+/***** HOME.html *****/
+
+.home-fields {
+    border-radius: 6px;
+    background-color: rgba(39 41 42 / 40%);
+    backdrop-filter: blur(10px);
+    margin-bottom: 8px;
+    /*border: #b3b8bd solid 1px;*/
+}
+
+
+ul.list-group li {
+    border-radius: 6px;
+    background: rgba(70, 70, 70, 0.2);
+    /*border: #5a6268 solid 2px;*/
+    margin: 0.1em;
+}
+
+ul.list-group li:hover {
+    background-color: #5a6268;
+    /*border: white solid 2px;*/
+}
+
+.my-projects {
+    border-radius: 4px;
+    padding: 6px;
+    color: white;
+    text-align: center;
+    /*color: rgba(207, 230, 243, 0.78);*/
+    /*background-color: rgba(87, 86, 83, 0.92);*/
+}
+
+.my-projects-first-row {
+    padding: 0.5em;
+    /*color: whitesmoke;*/
+    color: white;
+    display: flex;
+    align-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.2em;
+    /*width: 100%;*/
+    height: 60px;
+    /*flex: 1 0 100%;*/
+}
+
+.most-rated {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+}
+
+.second-info {
+    padding: 0.6em 0.5em 0 0.5em;
+    background-color: #d3d1d1;
+    color: rgb(48, 49, 49);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    justify-content: space-between;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.buttons-info {
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    padding-right: 1em;
+    flex: 1 0 20%;
+}
+
+.mySticky {
+    position: sticky;
+    left: 0;
+    background-image: linear-gradient(to bottom right, rgba(70, 70, 70, 0.8), rgba(10, 10, 10, 0.8));
+}
+
+#names, #authors {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    padding-left: 5px;
+}
+
+#names {
+    flex: 0 0 45%;
+}
+#authors {
+    flex: 0 0 30%;
 }

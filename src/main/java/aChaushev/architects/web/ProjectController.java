@@ -66,25 +66,39 @@ public class ProjectController {
         return "redirect:/home";
     }
 
-//    @GetMapping("/word/remove/{id}")
-//    public String removeWord(@PathVariable("id") Long WordId) {
-//        if(loggedUser.isLogged()){
-//            this.wordService.removeWord(WordId);
-//            return "redirect:/home";
+    @GetMapping("/favourites/{id}")
+    public String addToFavourites(@PathVariable("id") Long projectId) {
+        if (!loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
+        projectService.addToFavourites(loggedUser.getId(), projectId);
+
+        return "redirect:/home";
+    }
+
+//    @GetMapping("/favourites-remove/{id}")
+//    public String removeFromFavourites(@PathVariable("id") Long projectId) {
+//        if (!loggedUser.isLogged()) {
+//            return "redirect:/";
 //        }
 //
-//        return "redirect:/";
-//    }
+//        projectService.removeFromFavourites(loggedUser.getId(), projectId);
 //
-//    @GetMapping("/word/remove-all")
-//    public String removeAllWords() {
-//        if(loggedUser.isLogged()){
-//            this.wordService.removeAllWords();
-//            return "redirect:/home";
-//        }
-//
-//        return "redirect:/";
+//        return "redirect:/home";
 //    }
+
+
+    //TODO: check why @DeleteMapping not work
+    @GetMapping("/remove/{id}")
+    public String removeProject(@PathVariable("id") Long projectId) {
+        if(loggedUser.isLogged()){
+            this.projectService.removeProject(projectId);
+            return "redirect:/home";
+        }
+
+        return "redirect:/";
+    }
 
 
 }

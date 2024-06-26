@@ -1,38 +1,36 @@
 package aChaushev.architects.model.dto;
 
+import aChaushev.architects.model.entity.User;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
-import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class ProjectAddDTO {
+public class ProjectDTO {
 
-    @NotBlank(message = "Project name is required!")
-    @Size(min = 5, max = 40, message = "Project name length must be between 5 and 40 characters!")
+    private Long id;
+
     private String name;
 
-    @NotBlank(message = "{add.project.description.not.empty}")
-    @Size(min = 2, max = 300, message = "{add.project.description.length}")
     private String description;
 
-    @NotNull(message = "Project price is required!")
-    @DecimalMin(value = "1000", message = "Project price must be minimum 1000 USD!")
     private BigDecimal price;
 
-    @NotNull(message = "Project input date required!")
-    @PastOrPresent(message = "The input date must be in past or present!")
-    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate inputDate;
 
-    @NotNull
-    @Size(min = 1 ,message = "Project image URL is required.")
-    @Size(max = 300, message = "Image URL must be no more than 300 characters!")
     private String imageURL;
 
-    @NotNull(message = "Select project type!")
     private ArchProjectTypeName typeName;
+
+    private User architect;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -48,6 +46,14 @@ public class ProjectAddDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public LocalDate getInputDate() {
@@ -74,11 +80,11 @@ public class ProjectAddDTO {
         this.typeName = typeName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public User getArchitect() {
+        return architect;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setArchitect(User architect) {
+        this.architect = architect;
     }
 }

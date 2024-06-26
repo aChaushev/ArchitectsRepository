@@ -27,7 +27,7 @@ public class Project extends BaseEntity {
     private String imageURL;
 
     @Column(nullable = false)
-    private boolean isFavorite;
+    private boolean isFavorite = false;
 
     @Column(nullable = false)
     private int votes;

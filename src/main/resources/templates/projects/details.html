@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/head}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar::navbar(activeLink=${'details'})}"></div>
+
+<div class="container container-fluid">
+    <h2 class="text-center text-white mt-5">Details</h2>
+    <div th:object="${projectDetails}"
+            class="offers row mx-auto d-flex flex-row justify-content-center">
+        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
+
+            <div class="card-body pb-1">
+                <h5 class="card-title">
+                    Project Details</h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="card-text">• Name: <span th:text="*{name}">Project Name</span></div>
+                    <div class="card-text">• Type: <span th:text="*{typeName.name()}"></span></div>
+                    <div class="card-text">• Date: <span th:text="*{inputDate}"></span></div>
+                    <div class="card-text">• Price: <span th:text="*{price}"></span></div>
+                    <div class="card-text">• Architect: <span th:text="*{architect.username}"></span></div>
+                    <div class="card-text">• Description: <span th:text="*{description}"></span></div>
+
+                </li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link" href="/static">Update</a>
+                <a class="card-link"
+                   th:href="@{/project/remove/{id} (id = *{getId()})}"
+                >Delete</a>
+            </div>
+        </div>
+        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
+            <img th:src="${projectDetails.imageURL}" th:alt="${projectDetails.name}"
+                 class="card-img-top" alt="Project image">
+        </div>
+    </div>
+</div>
+
+<div>
+             <footer> </footer>
+</div>
+
+</body>
+</html>

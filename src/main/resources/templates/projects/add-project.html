@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragments/head}">
 </head>
@@ -7,7 +8,7 @@
 <body>
 
 <div>
-    <nav th:replace="~{fragments/navbar}"></nav>
+    <nav th:replace="~{fragments/navbar::navbar(activeLink=${'add-project'})}"></nav>
 </div>
 
 <div class="container mt-5">
@@ -15,33 +16,38 @@
     <form th:method="POST"
           th:action="@{/project/add}"
           th:object="${projectAddDTO}"
-          class="main-form mt-5  mx-auto col-md-8 d-flex flex-column justify-content-center">
+          class="main-form mt-3  mx-auto col-md-8 d-flex flex-column justify-content-center">
 
         <div class="row">
             <!-- Name -->
             <div class="form-group col-md-6 mb-3">
                 <label for="name" class="text-white font-weight-bold">Project Name</label>
                 <input id="name"
+                       type="text"
+                       name="name"
+                       class="form-control"
+                       placeholder="Name"
                        th:field="*{name}"
                        th:errorclass="'bg-warning'"
-                       type="text"
-                       class="form-control"
-                       placeholder="Name"/>
+                       />
                 <p class="errors alert alert-danger"
                    th:if="${#fields.hasErrors('name')}"
                    th:errors="*{name}"
-                > Name error message
-                </p>
-            </div>
-            <!-- EO: Name -->
+             > Name error message
+             </p>
+                <!-- th:each="err : ${#fields.hasErrors('name')}" th:text="${err}" - за да  грешките на един ред -->
+         </div>
+         <!-- EO: Name -->
 
             <!-- Project Type -->
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="typeName">Project Type</label>
                 <select id="typeName"
+                        name="typeName"
+                        class="form-control"
                         th:field="*{typeName}"
                         th:errorclass="'bg-warning'"
-                        class="form-control">
+                        >
                     <option value="">- Select project type -</option>
                     <option th:each="arhType: ${allArchTypes}"
                             th:text="${arhType.name()}"
@@ -65,6 +71,7 @@
                 <label for="inputDate" class="text-white font-weight-bold">Set Date</label>
                 <input id="inputDate"
                        type="date"
+                       name="inputDate"
                        class="form-control"
                        placeholder="Project creation date"
                        th:field="*{inputDate}"
@@ -83,6 +90,7 @@
                 <label for="price" class="text-white font-weight-bold">Price</label>
                 <input id="price"
                        type="number"
+                       name="price"
                        class="form-control"
                        placeholder="Suggested price"
                        th:field="*{price}"
@@ -121,6 +129,7 @@
                 <label class="text-white font-weight-bold" for="description">Description</label>
                 <textarea id="description"
                           type="textarea"
+                          name="description"
                           class="form-control"
                           rows="3"
                           placeholder="Description"

@@ -7,7 +7,7 @@
 <body>
 
 <nav
-        th:fragment="navbar"
+        th:fragment="navbar(activeLink)"
         class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
     <a class="navbar-brand" href="/"><img alt="arch picture" src="/images/architect.png" class="logo"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -22,10 +22,13 @@
             </li>
             <!--        <li class="nav-item" sec:authorize="isAuthenticated()">-->
             <li class="nav-item">
-                <a class="nav-link" id="nav-projects" href="/">Projects</a>
+                <a class="nav-link" id="nav-projects" href="/home"
+                   th:classappend="${activeLink == 'home'}? 'active'">Projects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/project/add">Add Project</a>
+                <a class="nav-link" href="/project/add"
+                   th:classappend="${activeLink == 'add-project'}? 'active'"
+                >Add Project</a>
             </li>
 
             <!--        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">-->
@@ -56,11 +59,15 @@
 
             <!--        <li class="nav-item" sec:authorize="!isAuthenticated()">-->
             <li class="nav-item">
-                <a class="nav-link" href="/users/register">Register</a>
+                <a class="nav-link" href="/users/register"
+                   th:classappend="${activeLink == 'register'}? 'active'"
+                >Register</a>
             </li>
             <!--        <li class="nav-item" sec:authorize="!isAuthenticated()">-->
             <li class="nav-item">
-                <a class="nav-link" href="/users/login">Login</a>
+                <a class="nav-link" href="/users/login"
+                   th:classappend="${activeLink == 'login'}? 'active'"
+                >Login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"

@@ -5,7 +5,7 @@
 </head>
 <body>
 <div>
-    <nav th:replace="~{fragments/navbar}"></nav>
+    <nav th:replace="~{fragments/navbar::navbar(activeLink=${'login'})}"></nav>
 </div>
 
 <div class="container mt-5">
@@ -13,7 +13,7 @@
     <form th:method="post"
           th:action="@{/users/login}"
           th:object="${userLoginDTO}"
-          class="main-form mt-5  mx-auto col-ms-8 col-md-6 d-flex flex-column justify-content-center">
+          class="main-form mt-3  mx-auto col-ms-8 col-md-6 d-flex flex-column justify-content-center">
         <div class="form-group">
             <label for="username" class="text-white d-flex justify-content-center">Username</label>
             <input id="username"
@@ -51,7 +51,9 @@
         <p th:each="error: ${#fields.errors()}"
              th:text="${error}"
              class="errors alert alert-danger">Error messages</p>
-        <p th:if="${badCredentials}" class="errors alert alert-danger">
+        <p th:if="${badCredentials}"
+           class="errors alert alert-danger"
+           >
             Invalid username or password.
         </p>
 
