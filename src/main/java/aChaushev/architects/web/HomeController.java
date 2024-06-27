@@ -1,15 +1,12 @@
-package aChaushev.architects.controller;
+package aChaushev.architects.web;
 
 
-import aChaushev.architects.model.dto.ProjectDTO;
+
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.user.LoggedUser;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -31,24 +28,33 @@ public class HomeController {
         return "index";
 
     }
+
     @GetMapping("/home")
-    public String getHomePage(Model model) {
+    public String getHomePage() {
         if (!loggedUser.isLogged()) {
             return "redirect:/";
         }
-
-        List<ProjectDTO> allProjects = projectService.getAllProjects();
-        model.addAttribute("allProjects", allProjects);
-
-        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(this.loggedUser.getId());
-        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
-
-        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(this.loggedUser.getId());
-        model.addAttribute("otherProjects", otherProjects);
-
-        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(this.loggedUser.getId());
-        model.addAttribute("favouriteProjects", favouriteProjects);
-
         return "home";
     }
+
+//    @GetMapping("/home")
+//    public String getHomePage(Model model) {
+//        if (!loggedUser.isLogged()) {
+//            return "redirect:/";
+//        }
+//
+//        List<ProjectDTO> allProjects = projectService.getAllProjects();
+//        model.addAttribute("allProjects", allProjects);
+//
+//        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(this.loggedUser.getId());
+//        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
+//
+//        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(this.loggedUser.getId());
+//        model.addAttribute("otherProjects", otherProjects);
+//
+//        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(this.loggedUser.getId());
+//        model.addAttribute("favouriteProjects", favouriteProjects);
+//
+//        return "home";
+//    }
 }

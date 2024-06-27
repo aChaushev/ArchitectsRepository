@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
 
 <head th:replace="~{fragments/head}">
 </head>
@@ -32,9 +33,12 @@
             </ul>
             <div class="card-body">
                 <a class="card-link" href="/static">Update</a>
-                <a class="card-link"
-                   th:href="@{/project/remove/{id} (id = *{getId()})}"
-                >Delete</a>
+                <form th:method="delete"
+                      th:action="@{/project/remove/{id}(id=*{id})}">
+                    <input class="btn card-link" type="submit" value="Delete"/>
+                </form>
+<!--                <a class="card-link"-->
+<!--                >Delete</a>-->
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">

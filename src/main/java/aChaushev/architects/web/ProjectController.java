@@ -1,14 +1,18 @@
 package aChaushev.architects.web;
 
 import aChaushev.architects.model.dto.ProjectAddDTO;
+import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.user.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @RequestMapping("/project")
 @Controller
@@ -34,13 +38,35 @@ public class ProjectController {
         return ArchProjectTypeName.values();
     }
 
-    @GetMapping("/add")
-    public String getAddProject() {
-        if(loggedUser.isLogged()){
-            return "projects/add-project";
+    @GetMapping("/all")
+    public String getAllProjects(Model model) {
+        if (!loggedUser.isLogged()) {
+            return "redirect:/users/login";
         }
 
-        return "redirect:/users/login";
+        List<ProjectDTO> allProjects = projectService.getAllProjects();
+        model.addAttribute("allProjects", allProjects);
+
+        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(this.loggedUser.getId());
+        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
+
+        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(this.loggedUser.getId());
+        model.addAttribute("otherProjects", otherProjects);
+
+        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(this.loggedUser.getId());
+        model.addAttribute("favouriteProjects", favouriteProjects);
+
+        return "projects/all-projects";
+    }
+
+    @GetMapping("/add")
+    public String getAddProject() {
+        if(!loggedUser.isLogged()){
+            return "redirect:/users/login";
+
+        }
+
+        return "projects/add-project";
     }
 
     @PostMapping("/add")
@@ -50,7 +76,7 @@ public class ProjectController {
             RedirectAttributes redirectAttributes) {
 
         if (!loggedUser.isLogged()) {
-            return "redirect:/";
+            return "redirect:/users/login";
         }
 
         if (bindingResult.hasErrors()) {
@@ -63,41 +89,53 @@ public class ProjectController {
 
         this.projectService.addProject(projectAddDTO);
 
-        return "redirect:/home";
+        return "redirect:/project/all";
     }
 
     @GetMapping("/favourites/{id}")
     public String addToFavourites(@PathVariable("id") Long projectId) {
         if (!loggedUser.isLogged()) {
-            return "redirect:/";
+            return "redirect:/users/login";
         }
 
         projectService.addToFavourites(loggedUser.getId(), projectId);
 
-        return "redirect:/home";
+        return "redirect:/project/add";
     }
 
 //    @GetMapping("/favourites-remove/{id}")
 //    public String removeFromFavourites(@PathVariable("id") Long projectId) {
 //        if (!loggedUser.isLogged()) {
-//            return "redirect:/";
+//            return "redirect:/users/login";
 //        }
 //
 //        projectService.removeFromFavourites(loggedUser.getId(), projectId);
 //
-//        return "redirect:/home";
+//        return "redirect:/project/add";
 //    }
+
+    @GetMapping("/{id}")
+    public String projectDetails(@PathVariable("id") Long projectId, Model model) {
+        if (!loggedUser.isLogged()) {
+            return "redirect:/users/login";
+        }
+
+        model.addAttribute("projectDetails", projectService.getProjectDetails(projectId));
+
+        return "/projects/details";
+    }
 
 
     //TODO: check why @DeleteMapping not work
-    @GetMapping("/remove/{id}")
+    @DeleteMapping("/remove/{id}")
     public String removeProject(@PathVariable("id") Long projectId) {
-        if(loggedUser.isLogged()){
-            this.projectService.removeProject(projectId);
-            return "redirect:/home";
+        if(!loggedUser.isLogged()){
+            return "redirect:/users/login";
         }
 
-        return "redirect:/";
+        this.projectService.removeProject(projectId);
+        return "redirect:/project/all";
+
     }
 
 
