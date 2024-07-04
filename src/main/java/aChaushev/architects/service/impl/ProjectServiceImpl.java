@@ -8,6 +8,7 @@ import aChaushev.architects.model.entity.User;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
+import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.user.LoggedUser;
 import org.modelmapper.ModelMapper;
@@ -25,13 +26,20 @@ public class ProjectServiceImpl implements ProjectService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final LoggedUser loggedUser;
+    private final ExRateService exRateService;
 
-    public ProjectServiceImpl(ArchProjectTypeRepository archProjectTypeRepository, ProjectRepository projectRepository, ModelMapper modelMapper, UserRepository userRepository, LoggedUser loggedUser) {
+    public ProjectServiceImpl(ArchProjectTypeRepository archProjectTypeRepository
+            , ProjectRepository projectRepository
+            , ModelMapper modelMapper
+            , UserRepository userRepository
+            , LoggedUser loggedUser
+            , ExRateService exRateService) {
         this.archProjectTypeRepository = archProjectTypeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.loggedUser = loggedUser;
+        this.exRateService = exRateService;
     }
 
 
@@ -133,12 +141,35 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDTO getProjectDetails(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid project ID");
+        }
+
+        List<String> allCurrencies = exRateService.allSupportedCurrencies();
+        List<String> filteredCurrencies = exRateService.filterCurrencies(allCurrencies);
+
         return this.projectRepository
                 .findById(id)
-                .map(project -> this.modelMapper.map(project, ProjectDTO.class))
+                .map(project -> {
+                    ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
+                    // Optionally, set the supported currencies to the ProjectDTO if needed
+                    projectDTO.setAllCurrencies(filteredCurrencies);
+                    return projectDTO;
+                })
                 .orElse(null);
 
     }
+//    @Override
+//    public ProjectDTO getProjectDetails(Long id) {
+//        return this.projectRepository
+//                .findById(id)
+//                .map(project ->
+//                    this.modelMapper.map(project, ProjectDTO.class))
+//                .orElse(null);
+//
+//    }
+
+
 
 
 //    @Override

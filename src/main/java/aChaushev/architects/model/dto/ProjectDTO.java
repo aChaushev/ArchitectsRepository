@@ -5,6 +5,7 @@ import aChaushev.architects.model.enums.ArchProjectTypeName;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class ProjectDTO {
 
@@ -23,6 +24,8 @@ public class ProjectDTO {
     private ArchProjectTypeName typeName;
 
     private User architect;
+
+    private List<String> allCurrencies;
 
     public Long getId() {
         return id;
@@ -86,5 +89,13 @@ public class ProjectDTO {
 
     public void setArchitect(User architect) {
         this.architect = architect;
+    }
+
+    public List<String> getAllCurrencies() {
+        return allCurrencies;
+    }
+
+    public void setAllCurrencies(List<String> allCurrencies) {
+        this.allCurrencies = allCurrencies;
     }
 }

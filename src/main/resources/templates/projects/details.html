@@ -23,14 +23,25 @@
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="card-text">• Name: <span th:text="*{name}">Project Name</span></div>
-                    <div class="card-text">• Type: <span th:text="*{typeName.name()}"></span></div>
-                    <div class="card-text">• Date: <span th:text="*{inputDate}"></span></div>
-                    <div class="card-text">• Price: <span th:text="*{price}"></span></div>
                     <div class="card-text">• Architect: <span th:text="*{architect.username}"></span></div>
+                    <div class="card-text">• Type: <span th:text="*{typeName.name()}"></span></div>
                     <div class="card-text">• Description: <span th:text="*{description}"></span></div>
-
+                    <div class="card-text">• Date: <span th:text="*{inputDate}"></span></div>
+                    <div class="card-text">• Price: <span id="price" th:text="*{price}">Price</span></div>
+                    <div class="card-text">• Currency
+                        <select id="currency">
+                            <option
+                                    th:each="currency : *{allCurrencies}"
+                                    th:value="${currency}"
+                                    th:selected="${currency} == 'BGN'"
+                                    th:text="${currency}"
+                            >
+                            </option>
+                        </select>
+                    </div>
                 </li>
             </ul>
+            <input type="hidden" id="priceInBGN" th:value="*{price}">
             <div class="card-body">
                 <a class="card-link" href="/static">Update</a>
                 <form th:method="delete"
@@ -51,6 +62,8 @@
 <div>
              <footer> </footer>
 </div>
+
+<script th:src="@{/js/currency.js}"></script>
 
 </body>
 </html>
