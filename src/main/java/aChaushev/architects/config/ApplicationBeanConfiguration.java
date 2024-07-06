@@ -18,8 +18,4 @@ public class ApplicationBeanConfiguration {
     return mapper;
   }
 
-  @Bean
-  public BCryptPasswordEncoder bCryptPasswordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 }

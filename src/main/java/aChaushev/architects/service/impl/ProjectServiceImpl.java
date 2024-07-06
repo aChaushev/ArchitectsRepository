@@ -10,7 +10,6 @@ import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
-import aChaushev.architects.user.LoggedUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,33 +24,30 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private final LoggedUser loggedUser;
     private final ExRateService exRateService;
 
     public ProjectServiceImpl(ArchProjectTypeRepository archProjectTypeRepository
             , ProjectRepository projectRepository
             , ModelMapper modelMapper
             , UserRepository userRepository
-            , LoggedUser loggedUser
             , ExRateService exRateService) {
         this.archProjectTypeRepository = archProjectTypeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.loggedUser = loggedUser;
         this.exRateService = exRateService;
     }
 
 
     @Override
     public void addProject(ProjectAddDTO projectAddDTO) {
-        Optional<User> user = this.userRepository.findById(loggedUser.getId());
+//        Optional<User> user = this.userRepository.findById(loggedUser.getId());
         Project project = this.modelMapper.map(projectAddDTO, Project.class);
 
         ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
 
         project.setArchProjectType(archProjectType);
-        project.setArchitect(user.get());
+//        project.setArchitect(user.get());
         projectRepository.save(project);
     }
 

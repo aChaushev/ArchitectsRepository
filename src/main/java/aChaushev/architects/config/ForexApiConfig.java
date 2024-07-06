@@ -45,10 +45,10 @@ public class ForexApiConfig {
         verifyNotNullOrEmpty(url, "url");
         verifyNotNullOrEmpty(base, "base");
 
-        if (!"USD".equals(base)) {
-            throw new IllegalAccessException("Sorry, but the free API does not support base currencies," +
-                    " different than USD");
-        }
+//        if (!"USD".equals(base)) {
+//            throw new IllegalAccessException("Sorry, but the free API does not support base currencies," +
+//                    " different than USD");
+//        }
 
     }
 

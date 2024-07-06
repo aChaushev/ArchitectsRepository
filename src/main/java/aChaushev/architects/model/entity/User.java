@@ -19,6 +19,7 @@ public class User extends BaseEntity{
 
   private String password;
 
+
   @OneToMany(mappedBy = "architect", fetch = FetchType.EAGER)
   private Set<Project> projects;
 

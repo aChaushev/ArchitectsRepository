@@ -2,7 +2,6 @@ package aChaushev.architects.web;
 
 import aChaushev.architects.model.dto.UserRegisterDTO;
 import aChaushev.architects.service.UserService;
-import aChaushev.architects.user.LoggedUser;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,11 +17,8 @@ public class UserRegistrationController {
 
   private final UserService userService;
 
-  private final LoggedUser loggedUser;
-
-    public UserRegistrationController(UserService userService, LoggedUser loggedUser) {
+    public UserRegistrationController(UserService userService) {
         this.userService = userService;
-        this.loggedUser = loggedUser;
     }
 
     @ModelAttribute("userRegisterDTO")
@@ -32,9 +28,6 @@ public class UserRegistrationController {
 
   @GetMapping("/register")
   public String register() {
-    if(loggedUser.isLogged()){
-      return  "redirect:/home";
-    }
     return "/users/register";
   }
 

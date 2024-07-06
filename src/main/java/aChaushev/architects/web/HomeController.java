@@ -2,10 +2,13 @@ package aChaushev.architects.web;
 
 
 
+import aChaushev.architects.model.user.ArchRepoUserDetails;
 import aChaushev.architects.service.ProjectService;
-import aChaushev.architects.user.LoggedUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -13,27 +16,27 @@ public class HomeController {
 
     private final ProjectService projectService;
 
-    private final LoggedUser loggedUser;
-
-    public HomeController(ProjectService projectService, LoggedUser loggedUser) {
+    public HomeController(ProjectService projectService) {
         this.projectService = projectService;
-        this.loggedUser = loggedUser;
     }
 
     @GetMapping("/")
-    public String getIndexPage() {
-        if (loggedUser.isLogged()) {
-            return "redirect:/home";
+    public String getIndexPage(@AuthenticationPrincipal
+                                   UserDetails userDetails,
+                               Model model) {
+
+        if (userDetails instanceof ArchRepoUserDetails archRepoUserDetails) {
+            model.addAttribute("welcomeMessage", archRepoUserDetails.getUsername()); // or getFullName()
+        } else {
+            model.addAttribute("welcomeMessage", "Anonymous");
         }
+
         return "index";
 
     }
 
     @GetMapping("/home")
     public String getHomePage() {
-        if (!loggedUser.isLogged()) {
-            return "redirect:/";
-        }
         return "home";
     }
 

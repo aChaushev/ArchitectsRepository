@@ -42,7 +42,7 @@ body {
     padding-right: 160px;
 }
 
-.container {
+.container, .container-fluid  {
     padding-top: 4.5rem;
 }
 

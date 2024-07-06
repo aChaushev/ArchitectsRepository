@@ -73,7 +73,7 @@ public class ExRateServiceImpl implements ExRateService {
         }
 
         exRatesDTO.rates().forEach((currency, rate) -> {
-            var exRateEntity = exRateRepository.findByCurrency(currency)
+            ExRateEntity exRateEntity = exRateRepository.findByCurrency(currency)
                     .orElseGet(() -> new ExRateEntity()
                             .setCurrency(currency));
 

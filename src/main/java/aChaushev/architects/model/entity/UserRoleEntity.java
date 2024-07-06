@@ -4,8 +4,8 @@ import aChaushev.architects.model.enums.UserRoleEnum;
 import jakarta.persistence.*;
 
 
-@Table(name = "roles")
 @Entity
+@Table(name = "roles")
 public class UserRoleEntity {
 
   @Id
