@@ -35,7 +35,8 @@ public class ArchRepoUserDetailsService implements UserDetailsService {
         return new ArchRepoUserDetails(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles().stream().map(UserRoleEntity::getRole).map(ArchRepoUserDetailsService::customMap).toList()
+                user.getRoles().stream().map(UserRoleEntity::getRole).map(ArchRepoUserDetailsService::customMap).toList(),
+                user.getId()
         );
     }
 

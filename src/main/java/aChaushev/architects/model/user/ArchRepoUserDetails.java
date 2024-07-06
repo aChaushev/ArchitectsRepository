@@ -9,40 +9,17 @@ public class ArchRepoUserDetails extends User {
 
 //  private final String firstName;
 //  private final String lastName;
+    private final Long id;
 
-  public ArchRepoUserDetails(
-      String username,
-      String password,
-      Collection<? extends GrantedAuthority> authorities
-//      ,String firstName,
-//      String lastName
-  ) {
-    super(username, password, authorities);
-//    this.firstName = firstName;
-//    this.lastName = lastName;
-  }
-
-/*    public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public String getFullName() {
-    StringBuilder fullName = new StringBuilder();
-    if (firstName != null) {
-      fullName.append(firstName);
-    }
-    if (lastName != null) {
-      if (!fullName.isEmpty()) {
-        fullName.append(" ");
-      }
-      fullName.append(lastName);
+    public ArchRepoUserDetails(String username, String password,
+            Collection<? extends GrantedAuthority> authorities, Long id) {
+        super(username, password, authorities);
+        this.id = id;
     }
 
-    return fullName.toString();
-  }
-  */
+    public Long getId() {
+        return id;
+    }
 }
+
+

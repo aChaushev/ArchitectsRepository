@@ -2,12 +2,16 @@ package aChaushev.architects.service;
 
 import aChaushev.architects.model.dto.ProjectAddDTO;
 import aChaushev.architects.model.dto.ProjectDTO;
+import aChaushev.architects.model.user.ArchRepoUserDetails;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface ProjectService {
-    void addProject(ProjectAddDTO projectAddDTO);
+
+
+    void addProject(ProjectAddDTO projectAddDTO, Long userId);
 
     List<ProjectDTO> getAllProjects();
 

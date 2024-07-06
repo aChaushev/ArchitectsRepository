@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th='http://www.thymeleaf.org'
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragments/head}">
@@ -14,8 +15,8 @@
 <main>
     <div class="container mt-5">
         <p class="mySticky text-center text-white"
-           th:if="${@loggedUser.isLogged()}"
-           th:text="'Welcome, ' + ${@loggedUser.username}"
+           sec:authorize="isAuthenticated()"
+           th:text="'Welcome, ' + ${#authentication.name}"
         >Welcome {userName}</p>
         <div class="row mt-5 mt-1 mb-2">
             <div class="col-6 mt-1 mb-1">
@@ -48,9 +49,10 @@
                                 <td th:text="${myProject.typeName.name()}"
                                 >{typeName}</td>
                                 <td style="width: 15%">
-                                    <!--                                    <a class="btn-danger btn"--> <!--//TODO: remove comment-->
-                                    <!--                                       th:href="@{/project/remove/{id} (id = *{myProject.id})}"-->
-                                    <!--                                    >Remove</a>-->
+                                    <form th:method="delete"
+                                          th:action="@{/project/remove/{id} (id = *{myProject.id})}">
+                                        <input class="btn btn-link" type="submit" value="Delete"/>
+                                    </form>
                                     <a class="btn-info btn"
                                        th:href="@{/project/{id} (id = *{myProject.id})}"
                                     >Details</a>
@@ -115,6 +117,13 @@
                                 </div>
                             </div>
                             <div class="buttons-info">
+                                <div>
+                                    <p><a class="btn-info btn"
+                                       th:href="@{/project/{id} (id = *{anotherProject.id})}"
+                                    >Details
+                                    </a>
+                                    <p>
+                                </div>
                                 <div class="favorite">
                                     <p><a class="btn-info btn"
                                           th:href="@{/project/favourites/{id} (id = *{anotherProject.id})}"

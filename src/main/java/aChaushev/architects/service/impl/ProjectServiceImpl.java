@@ -5,11 +5,13 @@ import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.entity.ArchProjectType;
 import aChaushev.architects.model.entity.Project;
 import aChaushev.architects.model.entity.User;
+import aChaushev.architects.model.user.ArchRepoUserDetails;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
+import aChaushev.architects.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,18 +38,20 @@ public class ProjectServiceImpl implements ProjectService {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.exRateService = exRateService;
+
     }
 
 
     @Override
-    public void addProject(ProjectAddDTO projectAddDTO) {
-//        Optional<User> user = this.userRepository.findById(loggedUser.getId());
+    public void addProject(ProjectAddDTO projectAddDTO, Long userId) {
+
+        Optional<User> user = this.userRepository.findById(userId);
         Project project = this.modelMapper.map(projectAddDTO, Project.class);
 
         ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
 
         project.setArchProjectType(archProjectType);
-//        project.setArchitect(user.get());
+        project.setArchitect(user.get());
         projectRepository.save(project);
     }
 
@@ -101,7 +105,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> getFavouriteProjects(Long userId) {
-//        User user = modelMapper.map(this.loggedUser, User.class);
+//        User user = modelMapper.map(userService.getCurrentUserId(), User.class);
         User user = userRepository.findById(userId).orElse(null);
         List<Project> projects = projectRepository.findByisFavoriteIsTrue(user);
         List<ProjectDTO> favouriteProjectsDTOs = new ArrayList<>();

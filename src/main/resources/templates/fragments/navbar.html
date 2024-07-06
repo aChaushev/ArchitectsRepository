@@ -18,12 +18,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav active mr-auto col-10 justify-content-between">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/"
+                   th:classappend="${activeLink == 'home'}? 'active'"
+                >Home</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
             <li class="nav-item">
                 <a class="nav-link" id="nav-projects" href="/project/all"
-                   th:classappend="${activeLink == 'home'}? 'active'">Projects</a>
+                   th:classappend="${activeLink == 'all-projects'}? 'active'">Projects</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/project/add"

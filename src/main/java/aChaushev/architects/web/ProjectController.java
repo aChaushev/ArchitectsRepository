@@ -3,8 +3,11 @@ package aChaushev.architects.web;
 import aChaushev.architects.model.dto.ProjectAddDTO;
 import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
+import aChaushev.architects.model.user.ArchRepoUserDetails;
 import aChaushev.architects.service.ProjectService;
+import aChaushev.architects.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,9 +21,11 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final UserService userService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
+        this.userService = userService;
     }
 
 
@@ -35,19 +40,20 @@ public class ProjectController {
     }
 
     @GetMapping("/all")
-    public String getAllProjects(Model model) {
+    public String getAllProjects(@AuthenticationPrincipal ArchRepoUserDetails userDetails, Model model) {
+        Long userId = userDetails.getId();
 
         List<ProjectDTO> allProjects = projectService.getAllProjects();
         model.addAttribute("allProjects", allProjects);
 
-//        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(this.loggedUser.getId());
-//        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
+        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(userId);
+        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
 
-//        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(this.loggedUser.getId());
-//        model.addAttribute("otherProjects", otherProjects);
-//
-//        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(this.loggedUser.getId());
-//        model.addAttribute("favouriteProjects", favouriteProjects);
+        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(userId);
+        model.addAttribute("otherProjects", otherProjects);
+
+        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(userId);
+        model.addAttribute("favouriteProjects", favouriteProjects);
 
         return "projects/all-projects";
     }
@@ -60,6 +66,7 @@ public class ProjectController {
     @PostMapping("/add")
     public String doAddProject(
             @Valid ProjectAddDTO projectAddDTO,
+            @AuthenticationPrincipal ArchRepoUserDetails userDetails,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
 
@@ -71,17 +78,19 @@ public class ProjectController {
             return "redirect:/project/add";
         }
 
-        this.projectService.addProject(projectAddDTO);
+        this.projectService.addProject(projectAddDTO, userDetails.getId());
 
         return "redirect:/project/all";
     }
 
+    //TODO: show all users favourites, should show current user favourites
     @GetMapping("/favourites/{id}")
-    public String addToFavourites(@PathVariable("id") Long projectId) {
+    public String addToFavourites(@PathVariable("id") Long projectId,
+                                  @AuthenticationPrincipal ArchRepoUserDetails userDetails) {
 
-//        projectService.addToFavourites(loggedUser.getId(), projectId);
+        projectService.addToFavourites(userDetails.getId(), projectId);
 
-        return "redirect:/project/add";
+        return "redirect:/project/all";
     }
 
 //    @GetMapping("/favourites-remove/{id}")
@@ -104,7 +113,8 @@ public class ProjectController {
     }
 
 
-    //TODO: check why @DeleteMapping not work
+    //for delete request use <form> in html and "spring.mvc.hiddenmethod.filter.enabled=true" in app.prop to work
+    // correctly
     @DeleteMapping("/remove/{id}")
     public String removeProject(@PathVariable("id") Long projectId) {
 
