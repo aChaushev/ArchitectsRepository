@@ -96,6 +96,13 @@ form.main-form {
     padding-bottom: 0.4rem;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 /***** HOME.html *****/
 
 .home-fields {

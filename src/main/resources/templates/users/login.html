@@ -8,10 +8,12 @@
     <nav th:replace="~{fragments/navbar::navbar(activeLink=${'login'})}"></nav>
 </div>
 
+
 <div class="container mt-5">
     <h2 class="text-center text-white">Login</h2>
     <form th:method="post"
           th:action="@{/users/login}"
+
           class="main-form mt-3  mx-auto col-ms-8 col-md-6 d-flex flex-column justify-content-center">
         <div class="form-group">
             <label for="username" class="text-white d-flex justify-content-center">Username</label>
@@ -45,14 +47,16 @@
 
         </div>
 
-        <p th:each="error: ${#fields.errors()}"
-             th:text="${error}"
-             class="errors alert alert-danger">Error messages</p>
-        <p th:if="${badCredentials}"
-           class="errors alert alert-danger"
-           >
-            Invalid username or password.
-        </p>
+<!--        <p th:each="error: ${#fields.errors()}"-->
+<!--             th:text="${error}"-->
+<!--             class="errors alert alert-danger">Error messages</p>-->
+
+<!--        <p th:if="${bad_credentials}"-->
+<!--           th:text="'Invalid username or password.'"-->
+<!--           class="errors alert alert-danger"-->
+<!--           >-->
+<!--            Invalid username or password.-->
+<!--        </p>-->
 
         <div class="row">
             <div class="col mb-2">

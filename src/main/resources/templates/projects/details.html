@@ -44,7 +44,7 @@
             <input type="hidden" id="priceInBGN" th:value="*{price}">
             <div class="card-body">
                 <a class="card-link" href="/static">Update</a>
-                <!-- TODO: only authorized can update and delete -->
+                <!-- TODO: only owner can update and delete -->
                 <form th:method="delete"
                       th:action="@{/project/remove/{id}(id=*{id})}">
                     <input class="btn card-link" type="submit" value="Delete"/>

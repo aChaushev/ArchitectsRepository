@@ -5,13 +5,12 @@ import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.entity.ArchProjectType;
 import aChaushev.architects.model.entity.Project;
 import aChaushev.architects.model.entity.User;
-import aChaushev.architects.model.user.ArchRepoUserDetails;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
-import aChaushev.architects.service.UserService;
+import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,7 +155,7 @@ public class ProjectServiceImpl implements ProjectService {
                     projectDTO.setAllCurrencies(filteredCurrencies);
                     return projectDTO;
                 })
-                .orElse(null);
+                .orElseThrow(() -> new ObjectNotFoundException("Project not found", id));
 
     }
 //    @Override

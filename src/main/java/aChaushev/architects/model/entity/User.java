@@ -43,7 +43,7 @@ public class User extends BaseEntity{
           name = "users_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private List<UserRoleEntity> roles = new ArrayList<>();
+  private List<UserRole> roles = new ArrayList<>();
 
   public boolean isActive() {
     return active;
@@ -77,11 +77,11 @@ public class User extends BaseEntity{
     this.password = password;
   }
 
-  public List<UserRoleEntity> getRoles() {
+  public List<UserRole> getRoles() {
     return roles;
   }
 
-  public void setRoles(List<UserRoleEntity> roles) {
+  public void setRoles(List<UserRole> roles) {
     this.roles = roles;
   }
 

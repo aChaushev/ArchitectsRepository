@@ -1,16 +1,18 @@
 package aChaushev.architects.config;
 
 import aChaushev.architects.repository.UserRepository;
-import aChaushev.architects.service.impl.ArchRepoUserDetailsService;
+import aChaushev.architects.service.impl.AppUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -23,7 +25,7 @@ public class SecurityConfig {
                         // all static resources to "common locations" (css, images, js) are available to anyone
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         // some more resources for all users
-                        .requestMatchers("/", "/users/login", "/users/register").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "project/{id}").permitAll()
                         // all other URL-s should be authenticated.
                         .anyRequest()
                         .authenticated()
@@ -55,8 +57,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public ArchRepoUserDetailsService userDetailsService(UserRepository userRepository) {
-        return new ArchRepoUserDetailsService(userRepository);
+    public AppUserDetailsService appUserDetailsService(UserRepository userRepository) {
+        return new AppUserDetailsService(userRepository);
     }
 
     @Bean

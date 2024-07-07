@@ -3,7 +3,7 @@ package aChaushev.architects.web;
 import aChaushev.architects.model.dto.ProjectAddDTO;
 import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
-import aChaushev.architects.model.user.ArchRepoUserDetails;
+import aChaushev.architects.model.user.AppUserDetails;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.UserService;
 import jakarta.validation.Valid;
@@ -40,7 +40,7 @@ public class ProjectController {
     }
 
     @GetMapping("/all")
-    public String getAllProjects(@AuthenticationPrincipal ArchRepoUserDetails userDetails, Model model) {
+    public String getAllProjects(@AuthenticationPrincipal AppUserDetails userDetails, Model model) {
         Long userId = userDetails.getId();
 
         List<ProjectDTO> allProjects = projectService.getAllProjects();
@@ -66,7 +66,7 @@ public class ProjectController {
     @PostMapping("/add")
     public String doAddProject(
             @Valid ProjectAddDTO projectAddDTO,
-            @AuthenticationPrincipal ArchRepoUserDetails userDetails,
+            @AuthenticationPrincipal AppUserDetails userDetails,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
 
@@ -83,10 +83,10 @@ public class ProjectController {
         return "redirect:/project/all";
     }
 
-    //TODO: show all users favourites, should show current user favourites
+    //TODO: now shows all users favourites -> should show current user favourites
     @GetMapping("/favourites/{id}")
     public String addToFavourites(@PathVariable("id") Long projectId,
-                                  @AuthenticationPrincipal ArchRepoUserDetails userDetails) {
+                                  @AuthenticationPrincipal AppUserDetails userDetails) {
 
         projectService.addToFavourites(userDetails.getId(), projectId);
 

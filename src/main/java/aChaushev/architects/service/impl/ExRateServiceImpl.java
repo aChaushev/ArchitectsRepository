@@ -5,7 +5,7 @@ import aChaushev.architects.model.dto.ExRatesDTO;
 import aChaushev.architects.model.entity.ExRateEntity;
 import aChaushev.architects.repository.ExRateRepository;
 import aChaushev.architects.service.ExRateService;
-import aChaushev.architects.service.ObjectNotFoundException;
+import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -116,7 +116,8 @@ public class ExRateServiceImpl implements ExRateService {
     @Override
     public BigDecimal convert(String from, String to, BigDecimal amount) {
         return findExRate(from, to)
-                .orElseThrow(() -> new ObjectNotFoundException("Conversion from " + from + " to " + to + " not possible!"))
+                .orElseThrow(() -> new ObjectNotFoundException("Conversion from " + from + " to " + to + " not " +
+                        "possible!", from + "~" + to))
                 .multiply(amount);
     }
 
