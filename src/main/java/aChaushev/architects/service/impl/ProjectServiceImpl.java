@@ -12,8 +12,14 @@ import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,52 +27,76 @@ import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
+
+    private Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
+
     private final ArchProjectTypeRepository archProjectTypeRepository;
     private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ExRateService exRateService;
+    private final RestClient projectsRestClient;
 
     public ProjectServiceImpl(ArchProjectTypeRepository archProjectTypeRepository
             , ProjectRepository projectRepository
             , ModelMapper modelMapper
             , UserRepository userRepository
-            , ExRateService exRateService) {
+            , ExRateService exRateService, @Qualifier("projectsRestClient") RestClient projectsRestClient) {
         this.archProjectTypeRepository = archProjectTypeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.exRateService = exRateService;
-
+        this.projectsRestClient = projectsRestClient;
     }
 
 
     @Override
     public void addProject(ProjectAddDTO projectAddDTO, Long userId) {
+        // without REST API
+//        Optional<User> user = this.userRepository.findById(userId);
+//        Project project = this.modelMapper.map(projectAddDTO, Project.class);
+//
+//        ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
+//
+//        project.setArchProjectType(archProjectType);
+//        project.setArchitect(user.get());
+//        projectRepository.save(project);
 
-        Optional<User> user = this.userRepository.findById(userId);
-        Project project = this.modelMapper.map(projectAddDTO, Project.class);
+        // todo - fix baseUrl
+        //REST API
+        LOGGER.debug("Creating new project...");
 
-        ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
-
-        project.setArchProjectType(archProjectType);
-        project.setArchitect(user.get());
-        projectRepository.save(project);
+        projectsRestClient
+                .post()
+                .uri("http://localhost:8081/project")
+                .body(projectAddDTO)
+                .retrieve();
     }
 
     @Override
     public List<ProjectDTO> getAllProjects() {
-        List<Project> projects = this.projectRepository.findAll();
-        List<ProjectDTO> projectDTOs = new ArrayList<>();
+        // without REST API
+//        List<Project> projects = this.projectRepository.findAll();
+//        List<ProjectDTO> projectDTOs = new ArrayList<>();
+//
+//        for (Project project : projects) {
+//            if(project.getArchitect() != null) {
+//                ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
+//                projectDTOs.add(projectDTO);
+//            }
+//        }
+//
+//        return projectDTOs;
 
-        for (Project project : projects) {
-            if(project.getArchitect() != null) {
-                ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
-                projectDTOs.add(projectDTO);
-            }
-        }
+        LOGGER.info("Get all projects...");
 
-        return projectDTOs;
+        return projectsRestClient
+                .get()
+                .uri("http://localhost:8081/project")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>(){});
     }
 
     @Override
@@ -156,6 +186,13 @@ public class ProjectServiceImpl implements ProjectService {
                     return projectDTO;
                 })
                 .orElseThrow(() -> new ObjectNotFoundException("Project not found", id));
+
+//        return projectsRestClient
+//                .get()
+//                .uri("http://localhost:8081/project/{id}", id)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .retrieve()
+//                .body(ProjectDTO.class);
 
     }
 //    @Override

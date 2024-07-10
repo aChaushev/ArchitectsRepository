@@ -2,10 +2,10 @@ package aChaushev.architects.web;
 
 import aChaushev.architects.model.dto.ConversionResultDTO;
 import aChaushev.architects.service.ExRateService;
+import aChaushev.architects.service.exception.ApiObjectNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -33,4 +33,16 @@ public class CurrencyController {
                 result
         ));
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ApiObjectNotFoundException.class)
+    @ResponseBody
+    public NotFoundErrorInfo handleApiObjectNotFoundException(ApiObjectNotFoundException apiObjectNotFoundException) {
+        return new NotFoundErrorInfo("NOT_FOUND", apiObjectNotFoundException.getId());
+    }
+
+    public record NotFoundErrorInfo(String code, Object id) {
+
+    }
+
 }

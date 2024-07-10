@@ -6,12 +6,15 @@ import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.model.user.AppUserDetails;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.UserService;
+import aChaushev.architects.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -111,6 +114,14 @@ public class ProjectController {
 
         return "/projects/details";
     }
+
+//    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+//    @ExceptionHandler(ObjectNotFoundException.class)
+//    public ModelAndView handleObjectNotFound(ObjectNotFoundException objectNotFoundException) {
+//        ModelAndView modelAndView = new ModelAndView("error/project-not-found");
+//        modelAndView.addObject("projectId", objectNotFoundException.getId());
+//        return modelAndView;
+//    }
 
 
     //for delete request use <form> in html and "spring.mvc.hiddenmethod.filter.enabled=true" in app.prop to work

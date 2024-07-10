@@ -5,9 +5,11 @@ import aChaushev.architects.model.dto.ExRatesDTO;
 import aChaushev.architects.model.entity.ExRateEntity;
 import aChaushev.architects.repository.ExRateRepository;
 import aChaushev.architects.service.ExRateService;
+import aChaushev.architects.service.exception.ApiObjectNotFoundException;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -31,7 +33,7 @@ public class ExRateServiceImpl implements ExRateService {
 
 
     public ExRateServiceImpl(ExRateRepository exRateRepository,
-                             RestClient restClient,
+                             @Qualifier("genericRestClient") RestClient restClient,
                              ForexApiConfig forexApiConfig) {
         this.exRateRepository = exRateRepository;
         this.restClient = restClient;
@@ -116,7 +118,7 @@ public class ExRateServiceImpl implements ExRateService {
     @Override
     public BigDecimal convert(String from, String to, BigDecimal amount) {
         return findExRate(from, to)
-                .orElseThrow(() -> new ObjectNotFoundException("Conversion from " + from + " to " + to + " not " +
+                .orElseThrow(() -> new ApiObjectNotFoundException("Conversion from " + from + " to " + to + " not " +
                         "possible!", from + "~" + to))
                 .multiply(amount);
     }
