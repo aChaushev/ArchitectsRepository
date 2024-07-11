@@ -8,53 +8,55 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "forex.api")
 public class ForexApiConfig {
 
-
     private String key;
-
     private String url;
-
     private String base;
 
     public String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public ForexApiConfig setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public ForexApiConfig setUrl(String url) {
         this.url = url;
+        return this;
     }
 
     public String getBase() {
         return base;
     }
 
-    public void setBase(String base) {
+    public ForexApiConfig setBase(String base) {
         this.base = base;
+        return this;
     }
 
     @PostConstruct
-    public void checkConfiguration() throws IllegalAccessException {
-        verifyNotNullOrEmpty(key, "key");
-        verifyNotNullOrEmpty(url, "url");
-        verifyNotNullOrEmpty(base, "base");
+    public void checkConfiguration() {
 
-//        if (!"USD".equals(base)) {
-//            throw new IllegalAccessException("Sorry, but the free API does not support base currencies," +
-//                    " different than USD");
-//        }
+        verifyNotNullOrEmpty("key", key);
+        verifyNotNullOrEmpty("base", base);
+        verifyNotNullOrEmpty("url", url);
+
+        if (!"USD".equals(base)) {
+            throw new IllegalStateException("Sorry, but the free API does not support base, "
+                    + "currencies different than USD.");
+        }
+
 
     }
 
     private static void verifyNotNullOrEmpty(String name, String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Property " + name + " can not be empty");
+            throw new IllegalArgumentException("Property " + name + " cannot be empty.");
         }
     }
 }

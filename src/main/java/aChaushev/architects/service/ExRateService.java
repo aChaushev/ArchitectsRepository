@@ -16,8 +16,6 @@ public interface ExRateService {
 
     void updateRates(ExRatesDTO exRatesDTO) throws IllegalAccessException;
 
-    Optional<BigDecimal> findExRate(String from, String to);
-
     BigDecimal convert(String from, String to, BigDecimal amount);
 
     List<String> filterCurrencies(List<String> currencies);

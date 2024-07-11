@@ -41,7 +41,8 @@ public class ProjectServiceImpl implements ProjectService {
             , ProjectRepository projectRepository
             , ModelMapper modelMapper
             , UserRepository userRepository
-            , ExRateService exRateService, @Qualifier("projectsRestClient") RestClient projectsRestClient) {
+            , ExRateService exRateService
+            , @Qualifier("projectsRestClient") RestClient projectsRestClient) {
         this.archProjectTypeRepository = archProjectTypeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;

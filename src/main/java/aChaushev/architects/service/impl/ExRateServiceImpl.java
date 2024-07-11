@@ -6,7 +6,6 @@ import aChaushev.architects.model.entity.ExRateEntity;
 import aChaushev.architects.repository.ExRateRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.exception.ApiObjectNotFoundException;
-import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,6 +38,7 @@ public class ExRateServiceImpl implements ExRateService {
         this.restClient = restClient;
         this.forexApiConfig = forexApiConfig;
     }
+
 
     @Override
     public List<String> allSupportedCurrencies() {
@@ -85,8 +85,7 @@ public class ExRateServiceImpl implements ExRateService {
         });
     }
 
-    @Override
-    public Optional<BigDecimal> findExRate(String from, String to) {
+    private Optional<BigDecimal> findExRate(String from, String to) {
 
         if (Objects.equals(from, to)) {
             return Optional.of(BigDecimal.ONE);
