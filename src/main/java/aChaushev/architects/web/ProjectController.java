@@ -62,7 +62,10 @@ public class ProjectController {
     }
 
     @GetMapping("/add")
-    public String getAddProject() {
+    public String getAddProject(Model model) {
+        if (!model.containsAttribute("projectAddDTO")) {
+            model.addAttribute("projectAddDTO", new ProjectAddDTO());
+        }
         return "projects/add-project";
     }
 

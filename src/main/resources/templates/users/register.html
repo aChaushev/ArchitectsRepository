@@ -33,7 +33,16 @@
             <p class="text-center errors alert alert-danger"
                th:if="${#fields.hasErrors('username')}"
                th:errors="*{username}"
+
             >
+<!--            <p class="text-center errors alert alert-danger d-block"-->
+<!--               th:if="${#fields.hasErrors('username')}"-->
+<!--               th:each="error: ${#fields.detailedErrors('username')}"-->
+<!--               th:text="${error.getMessage()}"-->
+<!--               th:errors="*{username}"-->
+<!--            >-->
+
+<!--                th:text="${#fields.detailedErrors().get(0).getMessage()}"->показва само първата грешка-->
                 Username is required.
             </p>
         </div>

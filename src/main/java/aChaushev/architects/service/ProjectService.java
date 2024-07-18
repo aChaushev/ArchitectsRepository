@@ -25,4 +25,6 @@ public interface ProjectService {
     void addToFavourites(Long userId, Long painingId);
 
     ProjectDTO getProjectDetails(Long id);
+
+//    ProjectDTO findById(Long id);
 }
