@@ -13,13 +13,13 @@ public class RestConfig {
         return RestClient.create();
     }
 
-    //for REST API
-    @Bean("projectsRestClient")
-    public RestClient projectsRestClient(ProjectApiConfig projectApiConfig) {
-        return RestClient
-                .builder()
-                .baseUrl(projectApiConfig.getBaseUrl())
-                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-                .build();
-    }
+//    //for REST API
+//    @Bean("projectsRestClient")
+//    public RestClient projectsRestClient(ProjectApiConfig projectApiConfig) {
+//        return RestClient
+//                .builder()
+//                .baseUrl(projectApiConfig.getBaseUrl())
+//                .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+//                .build();
+//    }
 }

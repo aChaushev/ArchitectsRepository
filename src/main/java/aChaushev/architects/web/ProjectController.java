@@ -5,16 +5,14 @@ import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.model.user.AppUserDetails;
 import aChaushev.architects.service.ProjectService;
-import aChaushev.architects.service.UserService;
-import aChaushev.architects.service.exception.ObjectNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -24,11 +22,11 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public ProjectController(ProjectService projectService, UserService userService) {
+    public ProjectController(ProjectService projectService, ModelMapper modelMapper) {
         this.projectService = projectService;
-        this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -71,9 +69,9 @@ public class ProjectController {
 
     @PostMapping("/add")
     public String doAddProject(
-            @Valid ProjectAddDTO projectAddDTO,
-            @AuthenticationPrincipal AppUserDetails userDetails,
+            @Valid @ModelAttribute("projectAddDTO") ProjectAddDTO projectAddDTO,
             BindingResult bindingResult,
+            @AuthenticationPrincipal AppUserDetails userDetails,
             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
@@ -89,26 +87,23 @@ public class ProjectController {
         return "redirect:/project/all";
     }
 
-    //TODO: now shows all users favourites -> should show current user favourites
+
     @GetMapping("/favourites/{id}")
     public String addToFavourites(@PathVariable("id") Long projectId,
                                   @AuthenticationPrincipal AppUserDetails userDetails) {
-
         projectService.addToFavourites(userDetails.getId(), projectId);
+        return "redirect:/project/all";
+    }
+
+
+    @GetMapping("/favourites-remove/{id}")
+    public String removeFromFavourites(@PathVariable("id") Long projectId,
+                                       @AuthenticationPrincipal AppUserDetails userDetails) {
+        projectService.removeFromFavourites(userDetails.getId(), projectId);
 
         return "redirect:/project/all";
     }
 
-//    @GetMapping("/favourites-remove/{id}")
-//    public String removeFromFavourites(@PathVariable("id") Long projectId) {
-//        if (!loggedUser.isLogged()) {
-//            return "redirect:/users/login";
-//        }
-//
-//        projectService.removeFromFavourites(loggedUser.getId(), projectId);
-//
-//        return "redirect:/project/add";
-//    }
 
     @GetMapping("/{id}")
     public String projectDetails(@PathVariable("id") Long projectId, Model model) {
@@ -118,24 +113,15 @@ public class ProjectController {
         return "/projects/details";
     }
 
-//    @ResponseStatus(code = HttpStatus.NOT_FOUND)
-//    @ExceptionHandler(ObjectNotFoundException.class)
-//    public ModelAndView handleObjectNotFound(ObjectNotFoundException objectNotFoundException) {
-//        ModelAndView modelAndView = new ModelAndView("error/project-not-found");
-//        modelAndView.addObject("projectId", objectNotFoundException.getId());
-//        return modelAndView;
-//    }
-
-
-    //for delete request use <form> in html and "spring.mvc.hiddenmethod.filter.enabled=true" in app.prop to work
-    // correctly
     @DeleteMapping("/remove/{id}")
-    public String removeProject(@PathVariable("id") Long projectId) {
-
+    public String removeProject(@PathVariable("id") Long projectId,
+                                @AuthenticationPrincipal AppUserDetails userDetails) {
+        if (!projectService.isProjectOwner(projectId, userDetails.getId())) {
+            throw new AccessDeniedException("You are not authorized to delete this project.");
+        }
         this.projectService.removeProject(projectId);
         return "redirect:/project/all";
-
     }
-
-
 }
+
+

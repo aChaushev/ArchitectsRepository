@@ -21,20 +21,21 @@ public class AppUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findByUsername(username)
                 .map(AppUserDetailsService::mapToUserDetails)
-                .orElseThrow(
-                        () -> new UsernameNotFoundException("User with username " + username + " not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
     }
 
     private static UserDetails mapToUserDetails(User user) {
         return new AppUserDetails(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles().stream().map(UserRole::getRole).map(AppUserDetailsService::mapToUserRole).toList(),
+                user.getRoles().stream()
+                        .map(UserRole::getRole)
+                        .map(AppUserDetailsService::mapToUserRole)
+                        .toList(),
                 user.getId(),
                 user.getEmail()
         );

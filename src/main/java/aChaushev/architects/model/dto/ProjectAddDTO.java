@@ -81,4 +81,8 @@ public class ProjectAddDTO {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+
 }
+
+

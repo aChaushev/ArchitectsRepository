@@ -1,6 +1,7 @@
 package aChaushev.architects.service.impl;
 
 
+import aChaushev.architects.model.dto.UserLoginDTO;
 import aChaushev.architects.model.dto.UserRegisterDTO;
 import aChaushev.architects.model.entity.User;
 import aChaushev.architects.repository.UserRepository;

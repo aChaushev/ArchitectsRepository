@@ -5,25 +5,25 @@ import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.entity.ArchProjectType;
 import aChaushev.architects.model.entity.Project;
 import aChaushev.architects.model.entity.User;
+import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
+import aChaushev.architects.service.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -35,69 +35,52 @@ public class ProjectServiceImpl implements ProjectService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ExRateService exRateService;
-    private final RestClient projectsRestClient;
 
     public ProjectServiceImpl(ArchProjectTypeRepository archProjectTypeRepository
             , ProjectRepository projectRepository
             , ModelMapper modelMapper
             , UserRepository userRepository
             , ExRateService exRateService
-            , @Qualifier("projectsRestClient") RestClient projectsRestClient) {
+    ) {
         this.archProjectTypeRepository = archProjectTypeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.exRateService = exRateService;
-        this.projectsRestClient = projectsRestClient;
     }
 
 
     @Override
     public void addProject(ProjectAddDTO projectAddDTO, Long userId) {
-        // without REST API
-//        Optional<User> user = this.userRepository.findById(userId);
-//        Project project = this.modelMapper.map(projectAddDTO, Project.class);
-//
-//        ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
-//
-//        project.setArchProjectType(archProjectType);
-//        project.setArchitect(user.get());
-//        projectRepository.save(project);
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("User not found", userId));
+        Project project = this.modelMapper.map(projectAddDTO, Project.class);
 
-        // todo - fix baseUrl
-        //REST API
-        LOGGER.debug("Creating new project...");
+        ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
 
-        projectsRestClient
-                .post()
-                .uri("http://localhost:8081/project")
-                .body(projectAddDTO)
-                .retrieve();
+        if (archProjectType == null) {
+            throw new ObjectNotFoundException("Project type not found", projectAddDTO.getTypeName().toString());
+        }
+
+        project.setArchProjectType(archProjectType);
+        project.setArchitect(user);
+        projectRepository.save(project);
+
     }
 
     @Override
     public List<ProjectDTO> getAllProjects() {
-        // without REST API
-//        List<Project> projects = this.projectRepository.findAll();
-//        List<ProjectDTO> projectDTOs = new ArrayList<>();
-//
-//        for (Project project : projects) {
-//            if(project.getArchitect() != null) {
-//                ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
-//                projectDTOs.add(projectDTO);
-//            }
-//        }
-//
-//        return projectDTOs;
+        List<Project> projects = this.projectRepository.findAll();
+        List<ProjectDTO> projectDTOs = new ArrayList<>();
 
-        LOGGER.info("Get all projects...");
+        for (Project project : projects) {
+            if (project.getArchitect() != null) {
+                ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
+                projectDTOs.add(projectDTO);
+            }
+        }
 
-        return projectsRestClient
-                .get()
-                .uri("http://localhost:8081/project")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(new ParameterizedTypeReference<>(){});
+        return projectDTOs;
     }
 
     @Override
@@ -106,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = this.projectRepository.findByArchitect(user);
         List<ProjectDTO> currentArchProjectDTOs = new ArrayList<>();
 
-        for (Project project : projects)  {
+        for (Project project : projects) {
             ProjectDTO currentArchProject = this.modelMapper.map(project, ProjectDTO.class);
             currentArchProjectDTOs.add(currentArchProject);
         }
@@ -125,7 +108,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<Project> projects = this.projectRepository.findByArchitectIsNot(user);
         List<ProjectDTO> otherArchProjectDTOs = new ArrayList<>();
 
-        for (Project project : projects)  {
+        for (Project project : projects) {
             ProjectDTO otherArchProject = this.modelMapper.map(project, ProjectDTO.class);
             otherArchProjectDTOs.add(otherArchProject);
         }
@@ -135,38 +118,58 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> getFavouriteProjects(Long userId) {
-//        User user = modelMapper.map(userService.getCurrentUserId(), User.class);
         User user = userRepository.findById(userId).orElse(null);
-        List<Project> projects = projectRepository.findByisFavoriteIsTrue(user);
-        List<ProjectDTO> favouriteProjectsDTOs = new ArrayList<>();
-
-        for (Project project : projects)  {
-            ProjectDTO favouriteProject = this.modelMapper.map(project, ProjectDTO.class);
-            favouriteProjectsDTOs.add(favouriteProject);
+        if (user == null) {
+            return Collections.emptyList(); // Handle user not found
         }
-
+        List<ProjectDTO> favouriteProjectsDTOs = new ArrayList<>();
+        for (Project project : user.getFavouriteProjects()) {
+            favouriteProjectsDTOs.add(this.modelMapper.map(project, ProjectDTO.class));
+        }
         return favouriteProjectsDTOs;
     }
 
+
     @Override
     @Transactional
-    public void addToFavourites(Long userId, Long painingId) {
+    public void addToFavourites(Long userId, Long projectId) {
         Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Project> projectOpt = projectRepository.findById(projectId);
 
-        if (userOpt.isEmpty()) {
+        if (userOpt.isEmpty() || projectOpt.isEmpty()) {
+            return; // Handle errors or notify user
+        }
+
+        User user = userOpt.get();
+        Project project = projectOpt.get();
+
+        // Check if the project is already in the user's favourites
+        if (!user.getFavouriteProjects().contains(project)) {
+            user.getFavouriteProjects().add(project);
+            project.setFavorite(true); // This might not be necessary if the relationship is enough
+            userRepository.save(user); // Persist changes to the user
+        }
+    }
+
+
+    @Override
+    @Transactional
+    public void removeFromFavourites(Long userId, Long projectId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Project> projectOpt = projectRepository.findById(projectId);
+
+        if (userOpt.isEmpty() || projectOpt.isEmpty()) {
             return;
         }
 
-        Optional<Project> projectOpt = projectRepository.findById(painingId);
+        User user = userOpt.get();
+        Project project = projectOpt.get();
 
-        if (projectOpt.isEmpty()) {
-            return;
-        }
+        user.removeFavouriteProject(project);
+        project.setFavorite(false);
 
-        userOpt.get().addFavouriteProject(projectOpt.get());
-
-        projectOpt.get().setFavorite(true);
-        userRepository.save(userOpt.get());
+        userRepository.save(user);
+        projectRepository.save(project);
     }
 
     @Override
@@ -187,36 +190,18 @@ public class ProjectServiceImpl implements ProjectService {
                     return projectDTO;
                 })
                 .orElseThrow(() -> new ObjectNotFoundException("Project not found", id));
-
-//        return projectsRestClient
-//                .get()
-//                .uri("http://localhost:8081/project/{id}", id)
-//                .accept(MediaType.APPLICATION_JSON)
-//                .retrieve()
-//                .body(ProjectDTO.class);
-
     }
-//    @Override
-//    public ProjectDTO getProjectDetails(Long id) {
-//        return this.projectRepository
-//                .findById(id)
-//                .map(project ->
-//                    this.modelMapper.map(project, ProjectDTO.class))
-//                .orElse(null);
-//
-//    }
 
+    @Override
+    public boolean isProjectOwner(Long projectId, Long userId) {
+        Optional<Project> projectOpt = projectRepository.findById(projectId);
+        if (projectOpt.isPresent()) {
+            Project project = projectOpt.get();
+            return project.getArchitect().getId().equals(userId);
+        }
+        return false;
+    }
 
-
-
-//    @Override
-//    public void removeFromFavourites(Long userId, Long painingId) {
-//        List<PaintingDTO> favouritePaintingDTOs = getFavouritePaintings(userId);
-//
-//        for (PaintingDTO favouritePaintingDTO : favouritePaintingDTOs) {
-//            if(favouritePaintingDTO.getId().equals(painingId)){
-//                removePainting(painingId);
-//            }
-//        }
-//    }
 }
+
+

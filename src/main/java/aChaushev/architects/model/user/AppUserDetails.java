@@ -7,14 +7,15 @@ import java.util.Collection;
 
 public class AppUserDetails extends User {
 
-//  private final String firstName;
-//  private final String lastName;
     private final Long id;
     private final String email;
 
     public AppUserDetails(String username, String password,
                           Collection<? extends GrantedAuthority> authorities, Long id, String email) {
         super(username, password, authorities);
+        //        super(Objects.requireNonNull(username, "Username cannot be null"),
+        //                Objects.requireNonNull(password, "Password cannot be null"),
+        //                Objects.requireNonNull(authorities, "Authorities cannot be null"));
         this.id = id;
         this.email = email;
     }

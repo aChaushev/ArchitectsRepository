@@ -43,13 +43,10 @@
             </ul>
             <input type="hidden" id="priceInBGN" th:value="*{price}">
             <div class="card-body">
-                <a class="card-link" href="/static">Update</a>
-                <!-- TODO: only owner can update and delete -->
-                <form th:method="delete"
-                      th:action="@{/project/remove/{id}(id=*{id})}">
+                <form th:method="delete" th:action="@{/project/remove/{id}(id=${projectDetails.id})}"
+                      th:if="${projectDetails.architect.id == #authentication.principal.id}">
                     <input class="btn card-link" type="submit" value="Delete"/>
                 </form>
-
             </div>
         </div>
         <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
@@ -67,3 +64,5 @@
 
 </body>
 </html>
+
+

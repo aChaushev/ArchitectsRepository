@@ -1,11 +1,12 @@
 package aChaushev.architects.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "projects")
@@ -26,25 +27,14 @@ public class Project extends BaseEntity {
     @Column(nullable = false)
     private String imageURL;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="tinyint(0) default 0" )
     private boolean isFavorite = false;
-
-    @Column(nullable = false)
-    private int votes;
 
     @ManyToOne
     private ArchProjectType archProjectType;
 
     @ManyToOne
     private User architect;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_votes",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> voters = new HashSet<>();
 
     public String getName() {
         return name;
@@ -102,22 +92,6 @@ public class Project extends BaseEntity {
         isFavorite = favorite;
     }
 
-    public int getVotes() {
-        return votes;
-    }
-
-    public void setVotes(int votes) {
-        this.votes = votes;
-    }
-
-    public Set<User> getVoters() {
-        return voters;
-    }
-
-    public void setVoters(Set<User> voters) {
-        this.voters = voters;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -126,3 +100,4 @@ public class Project extends BaseEntity {
         this.price = price;
     }
 }
+

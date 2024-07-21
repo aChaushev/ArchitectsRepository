@@ -10,21 +10,13 @@ import java.util.List;
 public class ProjectDTO {
 
     private Long id;
-
     private String name;
-
     private String description;
-
     private BigDecimal price;
-
     private LocalDate inputDate;
-
     private String imageURL;
-
     private ArchProjectTypeName typeName;
-
     private User architect;
-
     private List<String> allCurrencies;
 
     public Long getId() {
@@ -98,4 +90,7 @@ public class ProjectDTO {
     public void setAllCurrencies(List<String> allCurrencies) {
         this.allCurrencies = allCurrencies;
     }
+
+
 }
+
