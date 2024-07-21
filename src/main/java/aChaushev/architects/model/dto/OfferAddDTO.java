@@ -2,12 +2,19 @@ package aChaushev.architects.model.dto;
 
 
 import aChaushev.architects.model.entity.Project;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 
 public class OfferAddDTO {
 
     private String id;
+//    @NotNull(message = "Project input date required!")
+//    @FutureOrPresent(message = "The input date must be in present or future!")
+//    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private String createdOn;
     private String ValidUntil;
     private BigDecimal price;

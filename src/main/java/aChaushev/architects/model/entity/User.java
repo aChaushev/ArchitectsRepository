@@ -1,20 +1,14 @@
 package aChaushev.architects.model.entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity{
-
-//  private boolean active;
 
   private String username;
 
@@ -22,7 +16,6 @@ public class User extends BaseEntity{
   private String email;
 
   private String password;
-
 
   @OneToMany(mappedBy = "architect", fetch = FetchType.EAGER)
   private Set<Project> projects;
@@ -35,27 +28,12 @@ public class User extends BaseEntity{
   )
   private Set<Project> favouriteProjects;
 
-  @ManyToMany@JoinTable(
-          name = "user_rated_projects",
-          joinColumns = @JoinColumn(name = "user_id"),
-          inverseJoinColumns = @JoinColumn(name = "project_id")
-  )
-  private Set<Project> ratedProject;
-
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "users_roles",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "role_id"))
   private List<UserRole> roles = new ArrayList<>();
-
-//  public boolean isActive() {
-//    return active;
-//  }
-//
-//  public void setActive(boolean active) {
-//    this.active = active;
-//  }
 
   public String getUsername() {
     return username;
@@ -103,14 +81,6 @@ public class User extends BaseEntity{
 
   public void setFavouriteProjects(Set<Project> favouriteProjects) {
     this.favouriteProjects = favouriteProjects;
-  }
-
-  public Set<Project> getRatedProject() {
-    return ratedProject;
-  }
-
-  public void setRatedProject(Set<Project> ratedProject) {
-    this.ratedProject = ratedProject;
   }
 
   public void addFavouriteProject(Project project) {

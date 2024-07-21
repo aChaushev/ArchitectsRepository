@@ -8,15 +8,11 @@ import java.util.List;
 
 public interface OfferService {
 
-//    void create(OfferAddDTO offerAddDTO, String username);
-//
-//    List<OfferDTO> findAll();
-//
-//    List<OfferDTO> findOfferByUsername(String username);
-//
-//    OfferDTO findById(String id);
-//
-//    void deleteOffer(String id);
-//
-//    OfferDTO editOffer(String id, OfferDTO offerDTO);
+    void createOffer(OfferAddDTO offerAddDTO);
+
+    void deleteOffer(long offerId);
+
+    OfferDTO getOfferDetails(Long id);
+
+    List<OfferDTO> getAllOffersSummary();
 }

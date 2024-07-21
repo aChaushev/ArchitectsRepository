@@ -5,14 +5,12 @@ import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.entity.ArchProjectType;
 import aChaushev.architects.model.entity.Project;
 import aChaushev.architects.model.entity.User;
-import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
-import aChaushev.architects.service.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {

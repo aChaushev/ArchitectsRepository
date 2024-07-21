@@ -1,9 +1,6 @@
 package aChaushev.architects.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,6 +32,10 @@ public class Project extends BaseEntity {
 
     @ManyToOne
     private User architect;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            mappedBy = "project")
+    private Offer offer;
 
     public String getName() {
         return name;
@@ -98,6 +99,14 @@ public class Project extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }
 
