@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/head}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar::navbar(activeLink=${'event-add'})}"></div>
+
+<div class="container mt-5">
+    <h2 class="text-center text-white">Upload Event</h2>
+    <form
+            th:action="@{/event/add}"
+            th:method="post"
+            th:object="${eventAddDTO}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+
+            <!-- Name -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="name" class="text-white font-weight-bold">Event Name</label>
+                <input id="name"
+                       type="text"
+                       name="name"
+                       class="form-control"
+                       placeholder="Name"
+                       th:field="*{name}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('name')}"
+                   th:errors="*{name}"> Name error message
+                </p>
+            </div>
+
+            <!-- Image URL -->
+            <div class="form-group col-md-6 mb-3">
+                <label th:for="imageURL" class="text-white font-weight-bold">Image URL</label>
+                <input
+                        th:field="*{imageURL}"
+                        type="text"
+                        th:errorclass="is-invalid"
+                        class="form-control"
+                        placeholder="Image URL"/>
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('imageURL')}"
+                   th:errors="*{imageURL}"
+                > Image URL error message
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold">Event Date</label>
+                <input th:field="*{inputDate}" type="date" step="1" class="form-control"
+                       placeholder="Event date"/>
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('inputDate')}"
+                   th:errors="*{inputDate}"
+                > Event date is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="text-white font-weight-bold" th:for="description">Description</label>
+            <textarea
+                    th:field="*{description}"
+                    th:errorclass="is-invalid"
+                    type="textarea"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Description">
+            </textarea>
+            <p class="errors alert alert-danger"
+               th:if="${#fields.hasErrors('description')}"
+               th:errors="*{description}"
+            > Description is required.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col mb-2">
+                <div class="button-holder d-flex justify-content-center">
+                    <input type="submit" class="btn btn-info btn-lg" value="Submit Event"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>

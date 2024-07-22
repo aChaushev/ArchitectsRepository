@@ -12,8 +12,6 @@ import aChaushev.architects.service.ExRateService;
 import aChaushev.architects.service.ProjectService;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +22,6 @@ import java.util.Optional;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-
-    private Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     private final ArchProjectTypeRepository archProjectTypeRepository;
     private final ProjectRepository projectRepository;

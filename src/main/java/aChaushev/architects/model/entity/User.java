@@ -20,6 +20,9 @@ public class User extends BaseEntity{
   @OneToMany(mappedBy = "architect", fetch = FetchType.EAGER)
   private Set<Project> projects;
 
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  private Set<Event> events;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "user_favorite_projects",
@@ -91,5 +94,12 @@ public class User extends BaseEntity{
     this.favouriteProjects.remove(project);
   }
 
+  public Set<Event> getEvents() {
+    return events;
+  }
+
+  public void setEvents(Set<Event> events) {
+    this.events = events;
+  }
 }
 

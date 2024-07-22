@@ -54,14 +54,14 @@ public class OfferController {
     return "redirect:/offer/all";
   }
 
-  @GetMapping("/{id}")
-  public String offerDetails(@PathVariable("id") Long id,
-      Model model) {
-
-    model.addAttribute("offerDetails", offerService.getOfferDetails(id));
-
-    return "offers/offer-details";
-  }
+//  @GetMapping("/{id}")
+//  public String offerDetails(@PathVariable("id") Long id,
+//      Model model) {
+//
+//    model.addAttribute("offerDetails", offerService.getOfferDetails(id));
+//
+//    return "offers/offer-details";
+//  }
 
 //  @ResponseStatus(code = HttpStatus.NOT_FOUND)
 //  @ExceptionHandler(ObjectNotFoundException.class)

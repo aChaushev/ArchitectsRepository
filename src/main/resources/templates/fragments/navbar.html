@@ -61,6 +61,26 @@
                 </div>
             </li>
 
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                   th:classappend="${activeLink == 'events'}? 'active'"
+                   th:text="#{nav_bar_events}"
+                >Events
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="nav-events" href="/event/all"
+                       th:classappend="${activeLink == 'all-events'}? 'active'"
+                       th:text="#{nav_bar_all_events}"
+                    >Events</a>
+                    <a class="dropdown-item" href="/event/add"
+                       th:classappend="${activeLink == 'add-event'}? 'active'"
+                       th:text="#{nav_bar_add_event}"
+                    >Add Event</a>
+                </div>
+            </li>
+
+
             <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                 <a class="nav-link dropdown-toggle" href="/" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
