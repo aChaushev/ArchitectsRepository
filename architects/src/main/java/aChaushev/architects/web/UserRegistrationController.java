@@ -47,7 +47,8 @@ public class UserRegistrationController {
     this.userService.register(userRegisterDTO);
 
     return "redirect:/users/login";
-
   }
+
+  //TODO: when register set default userRole to USER
 
 }

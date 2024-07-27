@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+<div>
+    <nav th:replace="~{fragments/navbar::navbar(activeLink=${'admin-users'})}"></nav>
+</div>
+
+<main>
+    <div class="container mt-5">
+        <h2 class="text-center text-white">Manage Users</h2>
+
+        <table class="table table-striped table-dark mt-3">
+            <thead>
+            <tr>
+                <th class="active">Username</th>
+                <th class="active">Email</th>
+                <th class="active">Roles</th>
+                <th class="active">Edit</th>
+                <th class="active">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.username}">Username</td>
+                <td th:text="${user.email}">Email</td>
+                <td th:text="${user.roleNames}">Roles</td>
+                <td>
+
+                    <a class="btn btn-info" th:href="@{/admin/users/edit/{id} (id=${user.id})}">Edit</a>
+                </td>
+                <td>
+<!--                    todo:delete not working-->
+                <td>
+                    <form th:method="post" th:action="@{/admin/users/delete/{id}(id=${user.id})}">
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+
+                <!--                    <form th:action="@{/admin/users/delete/{id} (id=${user.id})}" method="post">-->
+<!--                        <button type="submit" class="btn btn-danger" value="Delete">Delete</button>-->
+<!--                    </form>-->
+<!--                                        <form th:method="post"-->
+<!--                                              th:action="@{/admin/users/delete/{id} (id=${user.id})}">-->
+<!--                                            <input class="btn card-link" type="submit"  value="Delete">-->
+<!--                                        </form>-->
+
+<!--                                        <a th:href="@{/admin/users/delete/{id} (id=*{user.id})}"-->
+<!--                                        >Delete</a>-->
+
+<!--                    <form th:action="@{/admin/users/delete/{id} (id=${user.id})}" method="post">-->
+<!--                        <input type="hidden" name="_method" value="delete">-->
+<!--                        <button class="btn btn-danger" type="submit">Delete</button>-->
+<!--                    </form>-->
+
+<!--                    <form action="/admin/users/delete/6" method="post">-->
+<!--                        <input type="hidden" name="_method" value="delete">-->
+<!--                        <button type="submit">Delete</button>-->
+<!--                    </form>-->
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+</body>
+</html>
