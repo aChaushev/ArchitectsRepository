@@ -13,8 +13,8 @@ public class ProjectAddDTO {
     @Size(min = 5, max = 40, message = "Project name length must be between 5 and 40 characters!")
     private String name;
 
-    @NotBlank(message = "{add.project.description.not.empty}")
-    @Size(min = 2, max = 300, message = "{add.project.description.length}")
+    @NotBlank(message = "Description length must be between 2 and 300 symbols.")
+    @Size(min = 2, max = 300, message = "Project description is required.")
     private String description;
 
     @NotNull(message = "Project price is required!")

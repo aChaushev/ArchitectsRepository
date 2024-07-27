@@ -1,7 +1,5 @@
 package aChaushev.architects.web;
 
-
-
 import aChaushev.architects.model.user.AppUserDetails;
 import aChaushev.architects.service.ProjectService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,9 +24,11 @@ public class HomeController {
                                Model model) {
 
         if (userDetails instanceof AppUserDetails appUserDetails) {
-            model.addAttribute("welcomeMessage", appUserDetails.getUsername()); // or getFullName()
+            model.addAttribute("welcomeMessage", appUserDetails.getUsername()); // or
+            // getFullName()
         } else {
-            model.addAttribute("welcomeMessage", "Anonymous");
+          model.addAttribute("welcomeMessage", "");
+//            model.addAttribute("welcomeMessage", "Anonymous");
         }
 
         return "index";

@@ -1,33 +1,27 @@
 package aChaushev.architects.model.dto;
 
-import aChaushev.architects.model.validation.annotation.FieldMatch;
-import aChaushev.architects.model.validation.annotation.UniqueUserEmail;
-import aChaushev.architects.model.validation.annotation.UniqueUsername;
+import aChaushev.architects.model.validation.annotation.*;
 import jakarta.validation.constraints.*;
 
-///TODO: @FieldMatch not working
-//@FieldMatch(
-//        first = "password",
-//        second = "confirmPassword",
-//        message = "Passwords should match.")
+@ValidatePasswords(message = "{register.user.error_msg.passwords.validator}")
 public class UserRegisterDTO {
 
 
-    @Size(min = 3,max = 20,message = "Username length must be between 3 and 20 characters!")
+    @Size(min = 3,max = 20,message = "{register.user.error_msg.username.length}")
     @NotNull
-    @UniqueUsername
+    @UniqueUsername(message = "{register.user.error_msg.username.unique}")
     private String username;
 
     @Email
-    @NotBlank(message = "Email can not be empty")
-    @UniqueUserEmail
+    @NotBlank(message = "{register.form.error_msg.email.not_blank}")
+    @UniqueUserEmail(message = "{register.user.error_msg.email.unique}")
     private String email;
 
-    @Size(min = 3,max = 20,message = "Password length must be between 3 and 20 characters!")
+    @Size(min = 3,max = 20,message = "{register.form.error_msg.password.length}")
     @NotNull
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "{register.form.error_msg.confirm_password.not_blank}")
     private String confirmPassword;
 
     public String getUsername() {

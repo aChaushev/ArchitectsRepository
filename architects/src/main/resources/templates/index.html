@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragments/head}">
@@ -18,8 +19,8 @@
 <!--            <th:block sec:authorize="!isAuthenticated()">Anonymous</th:block>-->
 <!--            !-->
 <!--        </h5>-->
-    <h5 class="text-center text-white mt-5">Welcome to Architect's Repository,
-        <th:block th:text="${welcomeMessage}"></th:block>!
+    <h5 class="text-center text-white mt-5">
+        <th:block th:text="#{index.page.welcome.msg} + ${welcomeMessage}"></th:block>!
     </h5>
 </div>
 

@@ -1,5 +1,6 @@
-package aChaushev.architects.model.validation.uniqueUsername;
+package aChaushev.architects.model.validation.annotation;
 
+import aChaushev.architects.model.validation.ValidatePasswordsValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -9,12 +10,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-@Constraint(validatedBy = UniqueUsernameValidator.class)
-public @interface UniqueUsername {
+@Target({ElementType.TYPE})
+@Constraint(validatedBy = ValidatePasswordsValidator.class)
+public @interface ValidatePasswords {
 
-    String message() default "Username already exists";
+    String message() default "Passwords don't match";
 
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
