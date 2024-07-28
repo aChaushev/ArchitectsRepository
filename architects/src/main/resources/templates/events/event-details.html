@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+<div th:replace="~{fragments/navbar::navbar(activeLink=${'event-details'})}"></div>
+
+<main>
+    <div class="container mt-5">
+        <h2 class="text-center text-white" th:text="${event.name}">Event Name</h2>
+
+        <div class="row mt-4">
+            <div class="col-md-6 text-center">
+                <!-- Larger image display -->
+                <img th:if="${#strings.isEmpty(event.imageUrl)}" src="/images/no_image.jpg" class="img-fluid" width="500" height="500" alt="Default Image"/>
+                <img th:unless="${#strings.isEmpty(event.imageUrl)}" th:src="${event.imageUrl}" class="img-fluid" width="500" height="500" alt="Event Image"/>
+            </div>
+            <div class="col-md-6 text-white">
+                <p><strong>Date:</strong> <span th:text="${event.date}">Event Date</span></p>
+                <p><strong>Organizer:</strong> <span th:text="${event.user.username}">Organizer</span></p>
+                <p><strong>Description:</strong> <span th:text="${event.description}">Event Description</span></p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a th:href="@{/event/all}" class="btn btn-info">Back to Events</a>
+                <div th:if="${event.user.id == #authentication.principal.id}" style="display:inline;">
+                    <form th:method="delete" th:action="@{/event/remove/{id}(id=${event.id})}" style="display:inline;">
+                        <input class="btn btn-info" type="submit" value="Delete Event"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -136,7 +136,7 @@ ul.list-group li:hover {
     /*border: white solid 2px;*/
 }
 
-.my-projects {
+.my-projects, .my-events {
     border-radius: 4px;
     padding: 6px;
     color: white;
@@ -145,7 +145,7 @@ ul.list-group li:hover {
     /*background-color: rgba(87, 86, 83, 0.92);*/
 }
 
-.my-projects-first-row {
+.my-projects-first-row, my-event {
     padding: 0.5em;
     /*color: whitesmoke;*/
     color: white;

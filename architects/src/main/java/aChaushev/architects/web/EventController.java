@@ -74,6 +74,14 @@ public class EventController {
         return "redirect:/event/all";
     }
 
+    @GetMapping("/details/{id}")
+    public String getEventDetails(@PathVariable("id") Long eventId, Model model) {
+        EventDTO event = eventService.getEventById(eventId);
+        model.addAttribute("event", event);
+        return "events/event-details";
+    }
+
+
     @DeleteMapping("/remove/{id}")
     public String removeEvent(@PathVariable("id") Long eventId,
                               @AuthenticationPrincipal AppUserDetails userDetails) {

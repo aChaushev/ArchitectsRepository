@@ -12,6 +12,8 @@ public interface EventService {
 
     List<EventDTO> getUserEvents(Long userId);
 
+    EventDTO getEventById(Long eventId);
+
     boolean isEventOwner(Long eventId, Long userId);
 
     void removeEvent(Long eventId);
