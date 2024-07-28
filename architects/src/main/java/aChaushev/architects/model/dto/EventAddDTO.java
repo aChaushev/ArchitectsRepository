@@ -19,7 +19,7 @@ public class EventAddDTO {
     private String description;
 
     @NotNull(message = "Project input date required!")
-    @Future(message = "The input date must be in the future!")
+    @FutureOrPresent(message = "The input date must be in present or future!")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private LocalDate inputDate;
 
