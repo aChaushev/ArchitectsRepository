@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,8 +96,19 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
 
-        // Save the updated user
+        // Update roles
+        List<UserRole> updatedRoles = userDetails.getRoles().stream()
+                .map(roleEnum -> userRoleRepository.findByRole(roleEnum)
+                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleEnum)))
+                .collect(Collectors.toList());
+        user.setRoles(updatedRoles);
+
         userRepository.save(user);
+    }
+
+    @Override
+    public List<UserRole> getAllRoles() {
+        return userRoleRepository.findAll();
     }
 
 }

@@ -32,34 +32,13 @@
                     <a class="btn btn-info" th:href="@{/admin/users/edit/{id} (id=${user.id})}">Edit</a>
                 </td>
                 <td>
-<!--                    todo:delete not working-->
+
                 <td>
                     <form th:method="post" th:action="@{/admin/users/delete/{id}(id=${user.id})}">
                         <input type="hidden" name="_method" value="delete">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </td>
-
-                <!--                    <form th:action="@{/admin/users/delete/{id} (id=${user.id})}" method="post">-->
-<!--                        <button type="submit" class="btn btn-danger" value="Delete">Delete</button>-->
-<!--                    </form>-->
-<!--                                        <form th:method="post"-->
-<!--                                              th:action="@{/admin/users/delete/{id} (id=${user.id})}">-->
-<!--                                            <input class="btn card-link" type="submit"  value="Delete">-->
-<!--                                        </form>-->
-
-<!--                                        <a th:href="@{/admin/users/delete/{id} (id=*{user.id})}"-->
-<!--                                        >Delete</a>-->
-
-<!--                    <form th:action="@{/admin/users/delete/{id} (id=${user.id})}" method="post">-->
-<!--                        <input type="hidden" name="_method" value="delete">-->
-<!--                        <button class="btn btn-danger" type="submit">Delete</button>-->
-<!--                    </form>-->
-
-<!--                    <form action="/admin/users/delete/6" method="post">-->
-<!--                        <input type="hidden" name="_method" value="delete">-->
-<!--                        <button type="submit">Delete</button>-->
-<!--                    </form>-->
 
                 </td>
             </tr>

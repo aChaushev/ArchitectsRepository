@@ -46,21 +46,14 @@
             </p>
         </div>
 
-<!--        todo: change roles does not work-->
         <div class="form-group">
             <label for="roles" class="text-white d-flex justify-content-center">Roles</label>
-            <input id="roles"
-                   name="roles"
-                   type="text"
-                   class="text-center form-control"
-                   th:field="*{roles}"
-                   th:errorclass="'bg-warning'"/>
-            <p class="text-center errors alert alert-danger"
-               th:if="${#fields.hasErrors('roles')}"
-               th:errors="*{roles}">
-                Roles are required.
-            </p>
+            <select id="roles" name="roles" class="form-control" multiple th:field="*{roles}">
+                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
+            </select>
+            <p class="text-center errors alert alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles are required.</p>
         </div>
+
 
         <div class="row">
             <div class="col mb-2">

@@ -1,11 +1,13 @@
+// може да улови User, който е подаден в даден мок (mockUserRepository)
+
 package aChaushev.architects.service.impl;
 
 import aChaushev.architects.model.dto.UserRegisterDTO;
 import aChaushev.architects.model.entity.User;
 import aChaushev.architects.repository.UserRepository;
+import aChaushev.architects.repository.UserRoleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -27,17 +29,32 @@ public class UserServiceImplTest {
 
     @Captor
     private ArgumentCaptor<User> userEntityCaptor;
-    // може да улови User, който е подаден в даден мок (mockUserRepository)
 
     @Mock
     private UserRepository mockUserRepository;
 
     @Mock
+    private UserRoleRepository mockUserRoleRepository; // Add mock for UserRoleRepository
+
+    @Mock
     private PasswordEncoder mockPasswordEncoder;
+
+    @Mock
+    private ModelMapper mockModelMapper;
 
     @BeforeEach
     void setUp() {
-        toTest = new UserServiceImpl(mockUserRepository, mockPasswordEncoder, new ModelMapper());
+        toTest = new UserServiceImpl(mockUserRepository, mockUserRoleRepository, mockPasswordEncoder, mockModelMapper);
+
+        // Use lenient stubbing for ModelMapper
+        lenient().when(mockModelMapper.map(any(UserRegisterDTO.class), eq(User.class))).thenAnswer(invocation -> {
+            UserRegisterDTO dto = invocation.getArgument(0);
+            User user = new User();
+            user.setUsername(dto.getUsername());
+            user.setEmail(dto.getEmail());
+            user.setPassword(dto.getPassword());
+            return user;
+        });
     }
 
     @Test

@@ -2,9 +2,8 @@ package aChaushev.architects.web;
 
 import aChaushev.architects.model.dto.UserDetailsDTO;
 import aChaushev.architects.model.entity.User;
-import aChaushev.architects.model.user.AppUserDetails;
+import aChaushev.architects.model.enums.UserRoleEnum;
 import aChaushev.architects.service.UserService;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +48,10 @@ public class AdminController {
     public String showEditUserForm(@PathVariable("id") Long id, Model model) {
         User user = userService.findUserById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("user", user);
+        UserDetailsDTO userDetailsDTO = new UserDetailsDTO(user.getId(), user.getUsername(), user.getEmail(), user.getRoles());
+
+        model.addAttribute("user", userDetailsDTO);
+        model.addAttribute("allRoles", Arrays.asList(UserRoleEnum.values())); // Provide all available roles
         return "admin/edit-user";
     }
 
