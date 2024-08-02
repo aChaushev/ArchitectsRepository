@@ -1,11 +1,10 @@
-package aChaushev.architects.repository;
+package bg.softuni.arch_repo.architects_offers.repository;
 
-import aChaushev.architects.model.entity.Offer;
+import bg.softuni.arch_repo.architects_offers.model.entity.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
+
 }

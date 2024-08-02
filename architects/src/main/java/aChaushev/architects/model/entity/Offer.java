@@ -15,6 +15,8 @@ public class Offer extends BaseEntity {
             referencedColumnName = "id")
     private User user;
 
+    private String name;
+
     @Column(name = "created_on", nullable = false)
     private String createdOn;
 
@@ -38,6 +40,14 @@ public class Offer extends BaseEntity {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

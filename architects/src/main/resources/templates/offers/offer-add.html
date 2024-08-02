@@ -20,18 +20,18 @@
 
                 <!-- Name -->
                 <div class="form-group col-md-6 mb-3">
-                    <label for="name" class="text-white font-weight-bold">Project Name</label>
+                    <label for="name" class="text-white font-weight-bold">Offer Name</label>
                     <input id="name"
                            type="text"
                            name="name"
                            class="form-control"
                            placeholder="Name"
-                           th:field="*{project.name}"
+                           th:field="*{name}"
                            th:errorclass="'bg-warning'"
                     />
                     <p class="errors alert alert-danger"
                        th:if="${#fields.hasErrors('project.name')}"
-                       th:errors="*{project.name}"> Name error message
+                       th:errors="*{name}"> Name error message
                     </p>
                     <!-- th:each="err : ${#fields.hasErrors('name')}" th:text="${err}" - за да  грешките на един ред -->
                 </div>

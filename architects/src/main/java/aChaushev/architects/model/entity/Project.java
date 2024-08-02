@@ -33,10 +33,6 @@ public class Project extends BaseEntity {
     @ManyToOne
     private User architect;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            mappedBy = "project")
-    private Offer offer;
-
     public String getName() {
         return name;
     }
@@ -99,14 +95,6 @@ public class Project extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public void setOffer(Offer offer) {
-        this.offer = offer;
     }
 }
 

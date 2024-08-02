@@ -1,7 +1,4 @@
-package aChaushev.architects.model.dto;
-
-
-import aChaushev.architects.model.entity.Project;
+package bg.softuni.arch_repo.architects_offers.model.dto;
 
 import java.math.BigDecimal;
 
@@ -13,7 +10,6 @@ public class OfferDTO {
     private String validUntil;
     private BigDecimal price;
     private String description;
-    private Project project;
 
     public String getId() {
         return id;
@@ -68,12 +64,7 @@ public class OfferDTO {
         return this;
     }
 
-    public Project getProject() {
-        return project;
-    }
 
-    public OfferDTO setProject(Project project) {
-        this.project = project;
-        return this;
-    }
+
 }
+

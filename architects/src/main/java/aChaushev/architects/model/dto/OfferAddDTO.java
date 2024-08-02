@@ -2,21 +2,18 @@ package aChaushev.architects.model.dto;
 
 
 import aChaushev.architects.model.entity.Project;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 
 public class OfferAddDTO {
 
     private String id;
+    private String name;
 //    @NotNull(message = "Project input date required!")
 //    @FutureOrPresent(message = "The input date must be in present or future!")
 //    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private String createdOn;
-    private String ValidUntil;
+    private String validUntil;
     private BigDecimal price;
     private String description;
     private Project project;
@@ -30,6 +27,14 @@ public class OfferAddDTO {
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCreatedOn() {
         return createdOn;
     }
@@ -40,11 +45,11 @@ public class OfferAddDTO {
     }
 
     public String getValidUntil() {
-        return ValidUntil;
+        return validUntil;
     }
 
     public OfferAddDTO setValidUntil(String validUntil) {
-        ValidUntil = validUntil;
+        this.validUntil = validUntil;
         return this;
     }
 
