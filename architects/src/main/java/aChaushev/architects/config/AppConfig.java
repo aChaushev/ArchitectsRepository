@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import javax.sql.DataSource;
 

@@ -1,5 +1,6 @@
 package aChaushev.architects.web;
 
+import aChaushev.architects.model.dto.UserDetailsDTO;
 import aChaushev.architects.service.exception.ObjectNotFoundException;
 import aChaushev.architects.service.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -28,18 +29,32 @@ public class GlobalExceptionController {
     public String handleValidationExceptions(
             MethodArgumentNotValidException ex, RedirectAttributes redirectAttributes) {
         BindingResult result = ex.getBindingResult();
-        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.projectAddDTO", result);
-        redirectAttributes.addFlashAttribute("projectAddDTO", result.getTarget());
-        return "redirect:/project/add"; // Replace with your form URL
+        // Determine which form the error is from and redirect accordingly
+        if (result.getTarget() instanceof UserDetailsDTO) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDetailsDTO", result);
+            redirectAttributes.addFlashAttribute("userDetailsDTO", result.getTarget());
+            return "redirect:/admin/users/edit"; // Adjust the URL accordingly
+        } else {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.projectAddDTO", result);
+            redirectAttributes.addFlashAttribute("projectAddDTO", result.getTarget());
+            return "redirect:/project/add"; // Adjust the URL accordingly
+        }
     }
 
     @ExceptionHandler(BindException.class)
     public String handleBindExceptions(
             BindException ex, RedirectAttributes redirectAttributes) {
         BindingResult result = ex.getBindingResult();
-        redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.projectAddDTO", result);
-        redirectAttributes.addFlashAttribute("projectAddDTO", result.getTarget());
-        return "redirect:/project/add"; // Replace with your form URL
+        // Determine which form the error is from and redirect accordingly
+        if (result.getTarget() instanceof UserDetailsDTO) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDetailsDTO", result);
+            redirectAttributes.addFlashAttribute("userDetailsDTO", result.getTarget());
+            return "redirect:/admin/users/edit"; // Adjust the URL accordingly
+        } else {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.projectAddDTO", result);
+            redirectAttributes.addFlashAttribute("projectAddDTO", result.getTarget());
+            return "redirect:/project/add"; // Adjust the URL accordingly
+        }
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -47,4 +62,3 @@ public class GlobalExceptionController {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
-

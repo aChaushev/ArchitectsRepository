@@ -1,16 +1,12 @@
 package aChaushev.architects.init;
 
-
 import aChaushev.architects.model.entity.ArchProjectType;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.repository.ArchProjectTypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 
 @Component
 public class ArchProjectTypeInit implements CommandLineRunner {
@@ -23,21 +19,16 @@ public class ArchProjectTypeInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        boolean hasLanguages = archProjectTypeRepository.count() > 0;
-
-        if (!hasLanguages) {
-
-            List<ArchProjectType> projectTypes = new ArrayList<>();
-
+        if (archProjectTypeRepository.count() == 0) {
             Arrays.stream(ArchProjectTypeName.values())
                     .forEach(projectTypeName -> {
-                        ArchProjectType projectType = new ArchProjectType();
-                        projectType.setProjectTypeName(projectTypeName);
-                        projectTypes.add(projectType);
+                        if (archProjectTypeRepository.findByProjectTypeName(projectTypeName) == null) {
+                            ArchProjectType projectType = new ArchProjectType();
+                            projectType.setProjectTypeName(projectTypeName);
+                            projectType.setDescription(projectTypeName); // This sets the description based on the enum
+                            archProjectTypeRepository.save(projectType);
+                        }
                     });
-
-            archProjectTypeRepository.saveAll(projectTypes);
         }
     }
 }
-

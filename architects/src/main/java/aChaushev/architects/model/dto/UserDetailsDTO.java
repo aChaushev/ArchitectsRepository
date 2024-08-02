@@ -11,15 +11,15 @@ public class UserDetailsDTO {
     private Long id;
     private String username;
     private String email;
-    private List<UserRoleEnum> roles;
+    private List<UserRole> roles;
     private String password;
 
     public UserDetailsDTO(Long id, String username, String email, List<UserRole> roles) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.roles = roles.stream().map(UserRole::getRole).collect(Collectors.toList());
-        // Convert UserRole to UserRoleEnum
+        this.roles = roles;
+
     }
 
     public Long getId() { return id; }
@@ -31,15 +31,17 @@ public class UserDetailsDTO {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public List<UserRoleEnum> getRoles() { return roles; }
-    public void setRoles(List<UserRoleEnum> roles) { this.roles = roles; }
+    public List<UserRole> getRoles() { return roles; }
+    public void setRoles(List<UserRole> roles) { this.roles = roles; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
     public String getRoleNames() {
         return roles.stream()
-                .map(UserRoleEnum::name)
+                .map(role -> role.getRole().name()) // Assuming `getRole()` returns an enum
                 .collect(Collectors.joining(", "));
     }
+
+
 }

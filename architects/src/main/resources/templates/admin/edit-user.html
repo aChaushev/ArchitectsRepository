@@ -48,12 +48,11 @@
 
         <div class="form-group">
             <label for="roles" class="text-white d-flex justify-content-center">Roles</label>
-            <select id="roles" name="roles" class="form-control" multiple th:field="*{roles}">
-                <option th:each="role : ${allRoles}" th:value="${role}" th:text="${role}"></option>
-            </select>
+            <div id="roles" name="roles" class="form-control" multiple="multiple" th:field="*{roles}">
+                <div th:text="${user.getRoleNames()}"></div>
+            </div>
             <p class="text-center errors alert alert-danger" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles are required.</p>
         </div>
-
 
         <div class="row">
             <div class="col mb-2">

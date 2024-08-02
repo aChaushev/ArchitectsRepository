@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,6 +51,11 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(this.passwordEncoder.encode(userRegisterDTO.getPassword()));
 
+        // Assign default role USER
+        UserRole userRole = userRoleRepository.findByRole(UserRoleEnum.USER)
+                .orElseThrow(() -> new IllegalArgumentException("Role not found: USER"));
+        user.setRoles(List.of(userRole));
+
         this.userRepository.save(user);
 
         return true;
@@ -60,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user, UserRoleEnum roleEnum) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
+//        user.setEnabled(true);
         UserRole userRole = userRoleRepository.findByRole(roleEnum)
                 .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleEnum));
         user.setRoles(List.of(userRole));
@@ -96,19 +100,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
 
-        // Update roles
-        List<UserRole> updatedRoles = userDetails.getRoles().stream()
-                .map(roleEnum -> userRoleRepository.findByRole(roleEnum)
-                        .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleEnum)))
-                .collect(Collectors.toList());
-        user.setRoles(updatedRoles);
-
+        // Save the updated user
         userRepository.save(user);
-    }
-
-    @Override
-    public List<UserRole> getAllRoles() {
-        return userRoleRepository.findAll();
     }
 
 }

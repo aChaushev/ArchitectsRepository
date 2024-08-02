@@ -25,5 +25,5 @@ public interface UserService {
 
     void updateUser(Long id, UserDetailsDTO userDetails);
 
-    List<UserRole> getAllRoles();
+//    List<UserRole> getAllRoles();
 }

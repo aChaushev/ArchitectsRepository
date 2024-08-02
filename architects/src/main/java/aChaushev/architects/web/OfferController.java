@@ -14,45 +14,45 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/offer")
 public class OfferController {
 
-  private final OfferService offerService;
+    private final OfferService offerService;
 
-  public OfferController(OfferService offerService) {
-    this.offerService = offerService;
-  }
-
-  @GetMapping("/all")
-  public String getAllOffers(Model model) {
-
-    model.addAttribute("allOffers", offerService.getAllOffersSummary());
-    return "offers/offers";
-  }
-
-
-  @GetMapping("/add")
-  public String newOffer(Model model) {
-    if (!model.containsAttribute("offerAddDTO")) {
-      model.addAttribute("offerAddDTO", new OfferAddDTO());
+    public OfferController(OfferService offerService) {
+        this.offerService = offerService;
     }
-    return "offers/offer-add";
-  }
 
-  @PostMapping("add")
-  public String createOffer(
-      @Valid OfferAddDTO offerAddDTO,
-      BindingResult bindingResult,
-      RedirectAttributes rAtt) {
+    @GetMapping("/all")
+    public String getAllOffers(Model model) {
 
-    if(bindingResult.hasErrors()){
-      rAtt.addFlashAttribute("offerAddDTO", offerAddDTO);
-      rAtt.addFlashAttribute("org.springframework.validation.BindingResult.offerAddDTO", bindingResult);
-      return "redirect:/offer/add";
+        model.addAttribute("allOffers", offerService.getAllOffersSummary());
+        return "offers/offers";
     }
 
 
-    offerService.createOffer(offerAddDTO);
+    @GetMapping("/add")
+    public String newOffer(Model model) {
+        if (!model.containsAttribute("offerAddDTO")) {
+            model.addAttribute("offerAddDTO", new OfferAddDTO());
+        }
+        return "offers/offer-add";
+    }
 
-    return "redirect:/offer/all";
-  }
+    @PostMapping("add")
+    public String createOffer(
+            @Valid OfferAddDTO offerAddDTO,
+            BindingResult bindingResult,
+            RedirectAttributes rAtt) {
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("offerAddDTO", offerAddDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.offerAddDTO", bindingResult);
+            return "redirect:/offer/add";
+        }
+
+
+        offerService.createOffer(offerAddDTO);
+
+        return "redirect:/offer/all";
+    }
 
 //  @GetMapping("/{id}")
 //  public String offerDetails(@PathVariable("id") Long id,
@@ -72,12 +72,10 @@ public class OfferController {
 //    return modelAndView;
 //  }
 
-  @DeleteMapping("/{id}")
-  public String deleteOffer(@PathVariable("id") Long id) {
-
-    offerService.deleteOffer(id);
-
-    return "redirect:/offers/all";
-  }
+    @DeleteMapping("/{id}")
+    public String deleteOffer(@PathVariable("id") Long id) {
+        offerService.deleteOffer(id);
+        return "redirect:/offers/all";
+    }
 }
 
