@@ -30,22 +30,24 @@
                            th:errorclass="'bg-warning'"
                     />
                     <p class="errors alert alert-danger"
-                       th:if="${#fields.hasErrors('project.name')}"
+                       th:if="${#fields.hasErrors('name')}"
                        th:errors="*{name}"> Name error message
                     </p>
-                    <!-- th:each="err : ${#fields.hasErrors('name')}" th:text="${err}" - за да  грешките на един ред -->
                 </div>
 
             <div class="form-group col-md-6 mb-3">
                 <label th:for="price" class="text-white font-weight-bold">Price (BGN)</label>
                 <input
-                    th:field="*{price}"
                        type="number"
-                       th:errorclass="is-invalid"
                        class="form-control"
-                       placeholder="Price in BGN"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Valid mileage in kilometers is required.
+                       placeholder="Price in BGN"
+                       th:field="*{price}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}"> Price is required.
+
                 </p>
 
             </div>
@@ -54,18 +56,30 @@
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold">createdOn</label>
-                <input th:field="*{createdOn}" type="date" step="1" class="form-control"
-                       placeholder="Star date"/>
-                <p class="errors alert alert-danger">
-                    Date of creation is required.
+                <input type="date"
+                       step="1"
+                       class="form-control"
+                       placeholder="Star date"
+                       th:field="*{createdOn}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                   th:if="${#fields.hasErrors('createdOn')}"
+                   th:errors="*{createdOn}"> Date of creation is required.
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold">validUntil</label>
-                <input th:field="*{validUntil}" type="date" step="1" class="form-control"
-                       placeholder="End date"/>
-                <p class="errors alert alert-danger">
-                    End date is required.
+                <input type="date"
+                       step="1"
+                       class="form-control"
+                       placeholder="End date"
+                       th:field="*{validUntil}"
+                       th:errorclass="'bg-warning'"
+                />
+                <p class="errors alert alert-danger"
+                    th:if="${#fields.hasErrors('validUntil')}"
+                    th:errors="*{validUntil}"> End date is required.
                 </p>
             </div>
         </div>
@@ -73,27 +87,20 @@
         <div class="form-group">
             <label class="text-white font-weight-bold" th:for="description">Description</label>
             <textarea
-                th:field="*{description}"
-                th:errorclass="is-invalid"
                 type="textarea"
                 class="form-control"
                 rows="3"
-                placeholder="Description">
+                placeholder="Description"
+                th:field="*{description}"
+                th:errorclass="'bg-warning'"
+            >
             </textarea>
-<!--            <p class="invalid-feedback errors alert alert-danger">-->
-<!--                Description is required and should be at least 5 symbols.-->
-<!--            </p>-->
 
             <p class="errors alert alert-danger"
                th:if="${#fields.hasErrors('description')}"
-               th:errors="*{description}"
-            > Description is required.
+               th:errors="*{description}"> Description is required.
             </p>
         </div>
-<!--            Alternative error display-->
-<!--            <small th:errors="*{description}" class="text-danger">Description error-->
-<!--            </small>-->
-
 
         <div class="row">
             <div class="col mb-2">

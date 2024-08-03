@@ -3,9 +3,11 @@ package bg.softuni.arch_repo.architects_offers.web;
 import bg.softuni.arch_repo.architects_offers.model.dto.OfferAddDTO;
 import bg.softuni.arch_repo.architects_offers.model.dto.OfferDTO;
 import bg.softuni.arch_repo.architects_offers.service.OfferService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,19 +29,17 @@ public class OfferController {
     return ResponseEntity.ok(offerService.getOfferById(id));
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
-    offerService.deleteOffer(id);
-    return ResponseEntity.noContent().build();
-  }
-
   @GetMapping
   public ResponseEntity<List<OfferDTO>> getAllOffers() {
     return ResponseEntity.ok(offerService.getAllOffers());
   }
 
   @PostMapping
-  public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferAddDTO offerAddDTO) {
+  public ResponseEntity<OfferDTO> createOffer(@Valid @RequestBody OfferAddDTO offerAddDTO, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return ResponseEntity.badRequest().build();
+    }
+
     LOGGER.info("Going to create an offer {}", offerAddDTO);
 
     OfferDTO offerDTO = offerService.createOffer(offerAddDTO);

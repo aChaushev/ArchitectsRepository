@@ -36,6 +36,7 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/admin/users/delete/**") // Disabling CSRF protection for delete requests
+
                 )
                 .formLogin(formLogin ->
                         formLogin

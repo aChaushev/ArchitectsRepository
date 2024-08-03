@@ -48,10 +48,6 @@ public class OfferServiceImpl implements OfferService {
             .orElseThrow(ObjectNotFoundException::new);
   }
 
-  @Override
-  public void deleteOffer(Long offerId) {
-    offerRepository.deleteById(offerId);
-  }
 
   @Override
   public List<OfferDTO> getAllOffers() {

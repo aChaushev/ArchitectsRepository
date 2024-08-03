@@ -7,7 +7,10 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -22,7 +25,6 @@ public class OfferController {
 
     @GetMapping("/all")
     public String getAllOffers(Model model) {
-
         model.addAttribute("allOffers", offerService.getAllOffersSummary());
         return "offers/offers";
     }
@@ -38,7 +40,7 @@ public class OfferController {
 
     @PostMapping("add")
     public String createOffer(
-            @Valid OfferAddDTO offerAddDTO,
+            @Valid @ModelAttribute("offerAddDTO") OfferAddDTO offerAddDTO,
             BindingResult bindingResult,
             RedirectAttributes rAtt) {
 
@@ -48,34 +50,8 @@ public class OfferController {
             return "redirect:/offer/add";
         }
 
-
         offerService.createOffer(offerAddDTO);
-
         return "redirect:/offer/all";
-    }
-
-//  @GetMapping("/{id}")
-//  public String offerDetails(@PathVariable("id") Long id,
-//      Model model) {
-//
-//    model.addAttribute("offerDetails", offerService.getOfferDetails(id));
-//
-//    return "offers/offer-details";
-//  }
-
-//  @ResponseStatus(code = HttpStatus.NOT_FOUND)
-//  @ExceptionHandler(ObjectNotFoundException.class)
-//  public ModelAndView handleObjectNotFound(ObjectNotFoundException onfe) {
-//    ModelAndView modelAndView = new ModelAndView("offer-not-found");
-//    modelAndView.addObject("offerId", onfe.getId());
-//
-//    return modelAndView;
-//  }
-
-    @DeleteMapping("/{id}")
-    public String deleteOffer(@PathVariable("id") Long id) {
-        offerService.deleteOffer(id);
-        return "redirect:/offers/all";
     }
 }
 

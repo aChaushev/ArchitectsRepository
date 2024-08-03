@@ -4,20 +4,19 @@ import java.math.BigDecimal;
 
 public class OfferDTO {
 
-    private String id;
+    private Long id;
     private String name;
     private String createdOn;
     private String validUntil;
     private BigDecimal price;
     private String description;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public OfferDTO setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
