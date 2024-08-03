@@ -1,6 +1,7 @@
 {
-  "description" : "Test offer",
-  "mileage" : "10000",
-  "price" : 120.20,
-  "engineType" : "PETROL"
+  "name": "Test offer 2",
+  "createdOn": "2024-08-06",
+  "validUntil": "2024-09-06",
+  "price": 520000,
+  "description": "Residential building in Sozopol Bulgaria"
 }

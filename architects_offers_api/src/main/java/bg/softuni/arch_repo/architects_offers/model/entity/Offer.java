@@ -2,9 +2,10 @@ package bg.softuni.arch_repo.architects_offers.model.entity;
 
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.time.Instant;
 
 @Entity
 @Table(name = "offers")
@@ -27,6 +28,10 @@ public class Offer {
 
   @Column(name = "description", columnDefinition = "TEXT", nullable = false)
   private String description;
+
+  @NotNull
+  @Column
+  private Instant created = Instant.now();
 
   public Long getId() {
     return id;
@@ -74,5 +79,13 @@ public class Offer {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Instant getCreated() {
+    return created;
+  }
+
+  public void setCreated(Instant created) {
+    this.created = created;
   }
 }

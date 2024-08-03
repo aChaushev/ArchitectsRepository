@@ -2,6 +2,8 @@ package bg.softuni.arch_repo.architects_offers.service;
 
 import bg.softuni.arch_repo.architects_offers.model.dto.OfferAddDTO;
 import bg.softuni.arch_repo.architects_offers.model.dto.OfferDTO;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 
 import java.util.List;
 
@@ -14,5 +16,7 @@ public interface OfferService {
 
   void deleteOffer(Long offerId);
 
-  List<OfferDTO> getAllOffers();
+  List<OfferDTO> getAllOffers();;
+
+  void cleanupOldOffers();
 }

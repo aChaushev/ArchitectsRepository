@@ -6,7 +6,6 @@ import aChaushev.architects.model.enums.UserRoleEnum;
 import aChaushev.architects.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,20 +69,6 @@ public class AdminController {
         userService.updateUser(id, userDetails);
         return "redirect:/admin/users";
     }
-
-
-
-//    @PostMapping("/users/edit/{id}")
-//    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user, Model model) {
-//        Optional<User> existingUser = userService.findUserById(id);
-//        existingUser.get().setUsername(user.getUsername());
-//        existingUser.get().setEmail(user.getEmail());
-//        // Do not update the roles
-//        userService.save(existingUser);
-//        model.addAttribute("user", existingUser);
-//        return "redirect:/admin/users";
-//    }
-
 
     @DeleteMapping("/users/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
