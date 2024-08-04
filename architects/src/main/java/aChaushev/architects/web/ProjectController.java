@@ -4,7 +4,9 @@ import aChaushev.architects.model.dto.ProjectAddDTO;
 import aChaushev.architects.model.dto.ProjectDTO;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
 import aChaushev.architects.model.user.AppUserDetails;
+import aChaushev.architects.repository.ProjectRepository;
 import aChaushev.architects.service.ProjectService;
+import aChaushev.architects.service.exception.ObjectAlreadyExistsException;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -22,10 +24,12 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
     private final ModelMapper modelMapper;
 
-    public ProjectController(ProjectService projectService, ModelMapper modelMapper) {
+    public ProjectController(ProjectService projectService, ProjectRepository projectRepository, ModelMapper modelMapper) {
         this.projectService = projectService;
+        this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -80,6 +84,10 @@ public class ProjectController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.projectAddDTO", bindingResult);
 
             return "redirect:/project/add";
+        }
+
+        if (projectRepository.findByName(projectAddDTO.getName()).isPresent()) {
+            throw new ObjectAlreadyExistsException("Project with that name already exist!");
         }
 
         this.projectService.addProject(projectAddDTO, userDetails.getId());

@@ -46,13 +46,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void addProject(ProjectAddDTO projectAddDTO, Long userId) {
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ObjectNotFoundException("User not found", userId));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found"));
         Project project = this.modelMapper.map(projectAddDTO, Project.class);
 
         ArchProjectType archProjectType = archProjectTypeRepository.findByProjectTypeName(projectAddDTO.getTypeName());
 
         if (archProjectType == null) {
-            throw new ObjectNotFoundException("Project type not found", projectAddDTO.getTypeName().toString());
+            throw new ObjectNotFoundException("Project type not found");
         }
 
         project.setArchProjectType(archProjectType);
@@ -182,7 +182,7 @@ public class ProjectServiceImpl implements ProjectService {
                     projectDTO.setAllCurrencies(filteredCurrencies);
                     return projectDTO;
                 })
-                .orElseThrow(() -> new ObjectNotFoundException("Project not found", id));
+                .orElseThrow(() -> new ObjectNotFoundException("Project not found"));
     }
 
     @Override

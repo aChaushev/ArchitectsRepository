@@ -3,7 +3,9 @@ package aChaushev.architects.web;
 import aChaushev.architects.model.dto.EventAddDTO;
 import aChaushev.architects.model.dto.EventDTO;
 import aChaushev.architects.model.user.AppUserDetails;
+import aChaushev.architects.repository.EventRepository;
 import aChaushev.architects.service.EventService;
+import aChaushev.architects.service.exception.ObjectAlreadyExistsException;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,10 +23,12 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final EventRepository eventRepository;
     private final ModelMapper modelMapper;
 
-    public EventController(EventService eventService, ModelMapper modelMapper) {
+    public EventController(EventService eventService, EventRepository eventRepository, ModelMapper modelMapper) {
         this.eventService = eventService;
+        this.eventRepository = eventRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -69,9 +73,15 @@ public class EventController {
             return "redirect:/event/add";
         }
 
+        if (eventRepository.findByName(eventAddDTO.getName()).isPresent()) {
+            throw new ObjectAlreadyExistsException("Event with that name already exist!");
+        }
+
         this.eventService.addEvent(eventAddDTO, userDetails.getId());
 
         return "redirect:/event/all";
+
+
     }
 
     @GetMapping("/details/{id}")

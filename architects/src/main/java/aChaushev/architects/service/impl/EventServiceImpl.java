@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void addEvent(EventAddDTO eventAddDTO, Long userId) {
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ObjectNotFoundException("User not found", userId));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found"));
         Event event = this.modelMapper.map(eventAddDTO, Event.class);
         event.setUser(user);
         eventRepository.save(event);
@@ -73,7 +73,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventDTO getEventById(Long eventId) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new ObjectNotFoundException("Event not found", eventId));
+                .orElseThrow(() -> new ObjectNotFoundException("Event not found"));
         return modelMapper.map(event, EventDTO.class);
     }
 
@@ -81,7 +81,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public boolean isEventOwner(Long eventId, Long userId) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new ObjectNotFoundException("Event not found", eventId));
+                .orElseThrow(() -> new ObjectNotFoundException("Event not found"));
         return event.getUser().getId().equals(userId);
     }
 

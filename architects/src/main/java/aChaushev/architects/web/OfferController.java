@@ -2,6 +2,7 @@ package aChaushev.architects.web;
 
 
 import aChaushev.architects.model.dto.OfferAddDTO;
+import aChaushev.architects.repository.OfferRepository;
 import aChaushev.architects.service.OfferService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class OfferController {
 
     private final OfferService offerService;
 
-    public OfferController(OfferService offerService) {
+    public OfferController(OfferService offerService, OfferRepository offerRepository) {
         this.offerService = offerService;
     }
 

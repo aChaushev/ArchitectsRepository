@@ -6,6 +6,7 @@ VALUES (1, 'USER'),
        (2, 'ADMIN');
 
 -- Insert users
+-- PASSWORDS ARE "123"
 INSERT
 INTO `users` (`id`, `email`, `password`, `username`)
 VALUES ('1', 'u1@u1',
