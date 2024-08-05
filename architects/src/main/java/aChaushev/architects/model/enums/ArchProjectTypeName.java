@@ -4,3 +4,4 @@ public enum ArchProjectTypeName {
 
     RESIDENTIAL, COMMERCIAL, LANDSCAPE, INTERIOR, URBAN
 }
+

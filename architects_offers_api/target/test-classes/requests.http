@@ -3,7 +3,9 @@ POST http://localhost:8081/offers
 Content-Type: application/json
 
 {
-  "description": "Test offer 2",
-  "mileage": 20000,
-  "price": 220,
-  "engineType": "DIESEL"
+  "name": "Test offer 2",
+  "createdOn": "2024-08-06",
+  "validUntil": "2024-09-06",
+  "price": 520000,
+  "description": "Residential building in Sozopol Bulgaria"
+}

@@ -35,6 +35,7 @@ public class RegistrationControllerIT {
   void testRegistration() throws Exception {
 
     mockMvc.perform(post("/users/register")
+        .param("username", "Anna")
         .param("email", "anna@example.com")
         .param("password", "123")
             .with(csrf())

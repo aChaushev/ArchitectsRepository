@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
@@ -15,4 +16,5 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Modifying
     @Query("DELETE FROM Offer o WHERE o.created < :olderThan")
     void deleteOldOffers(Instant olderThan);
+
 }

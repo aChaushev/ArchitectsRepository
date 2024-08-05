@@ -62,7 +62,7 @@
             </li>
 
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                <a class="nav-link dropdown-toggle" href="/"  role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                    th:classappend="${activeLink == 'events'}? 'active'"
                    th:text="#{nav_bar_events}"

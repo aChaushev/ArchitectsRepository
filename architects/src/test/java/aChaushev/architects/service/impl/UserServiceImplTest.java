@@ -4,6 +4,8 @@ package aChaushev.architects.service.impl;
 
 import aChaushev.architects.model.dto.UserRegisterDTO;
 import aChaushev.architects.model.entity.User;
+import aChaushev.architects.model.entity.UserRole;
+import aChaushev.architects.model.enums.UserRoleEnum;
 import aChaushev.architects.repository.UserRepository;
 import aChaushev.architects.repository.UserRoleRepository;
 import org.junit.jupiter.api.Assertions;
@@ -71,6 +73,11 @@ public class UserServiceImplTest {
 
         when(mockUserRepository.findByUsernameAndEmail(userRegistrationDTO.getUsername(), userRegistrationDTO.getEmail()))
                 .thenReturn(Optional.empty());
+
+        UserRole userRole = new UserRole();
+        userRole.setRole(UserRoleEnum.USER);
+        when(mockUserRoleRepository.findByRole(UserRoleEnum.USER))
+                .thenReturn(Optional.of(userRole));
 
         // ACT
         boolean isRegistered = toTest.register(userRegistrationDTO);

@@ -1,9 +1,9 @@
 package aChaushev.architects.model.dto;
 
 import aChaushev.architects.model.entity.UserRole;
-import aChaushev.architects.model.enums.UserRoleEnum;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailsDTO {
@@ -43,5 +43,20 @@ public class UserDetailsDTO {
                 .collect(Collectors.joining(", "));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDetailsDTO that = (UserDetailsDTO) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(roles, that.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, email, roles);
+    }
 
 }

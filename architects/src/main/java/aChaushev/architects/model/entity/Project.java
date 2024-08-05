@@ -12,7 +12,8 @@ public class Project extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
+//    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable = false)
