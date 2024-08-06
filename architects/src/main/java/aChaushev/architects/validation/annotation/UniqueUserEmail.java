@@ -1,6 +1,6 @@
-package aChaushev.architects.model.validation.annotation;
+package aChaushev.architects.validation.annotation;
 
-import aChaushev.architects.model.validation.UniqueUserEmailValidator;
+import aChaushev.architects.validation.UniqueUserEmailValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

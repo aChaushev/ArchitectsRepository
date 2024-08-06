@@ -1,4 +1,4 @@
-package aChaushev.architects.web;
+package aChaushev.architects.web.it;
 
 
 import aChaushev.architects.model.entity.User;

@@ -1,14 +1,12 @@
-package aChaushev.architects.model.validation;
+package aChaushev.architects.validation;
 
 import aChaushev.architects.model.dto.UserRegisterDTO;
-import aChaushev.architects.model.validation.annotation.ValidatePasswords;
+import aChaushev.architects.validation.annotation.ValidatePasswords;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
 import org.springframework.stereotype.Component;
 
-
-//todo: if you don't need this validator -> delete it
 @Component
 public class ValidatePasswordsValidator implements ConstraintValidator<ValidatePasswords, UserRegisterDTO> {
     private String message;

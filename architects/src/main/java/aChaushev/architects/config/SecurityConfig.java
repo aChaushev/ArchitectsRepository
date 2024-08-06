@@ -60,7 +60,13 @@ public class SecurityConfig {
                                         .logoutSuccessUrl("/")
                                         // invalidate the session after logout.
                                         .invalidateHttpSession(true)
-                )
+                ).rememberMe(
+                        rememberMe ->
+                                rememberMe
+                                        .rememberMeCookieName("rememberMeCookie")
+                                        .key("uniqueAndSecret")
+                                        .rememberMeParameter("remember-me")
+                                        .tokenValiditySeconds(86400))
                 .build();
     }
 

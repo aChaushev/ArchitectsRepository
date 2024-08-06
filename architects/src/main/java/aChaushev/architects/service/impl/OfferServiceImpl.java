@@ -37,12 +37,12 @@ public class OfferServiceImpl implements OfferService {
   public void createOffer(OfferAddDTO offerAddDTO) {
     LOGGER.info("Creating new offer...");
 
-    // todo - fix baseUrl.
     offerRestClient
         .post()
         .uri("http://localhost:8081/offers")
         .body(offerAddDTO)
         .retrieve();
+    //.onStatus()
   }
 
   @Override

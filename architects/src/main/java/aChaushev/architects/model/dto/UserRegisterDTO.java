@@ -1,6 +1,6 @@
 package aChaushev.architects.model.dto;
 
-import aChaushev.architects.model.validation.annotation.*;
+import aChaushev.architects.validation.annotation.*;
 import jakarta.validation.constraints.*;
 
 @ValidatePasswords(message = "{register.user.error_msg.passwords.validator}")

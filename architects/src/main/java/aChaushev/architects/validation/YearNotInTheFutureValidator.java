@@ -1,6 +1,6 @@
-package aChaushev.architects.model.validation;
+package aChaushev.architects.validation;
 
-import aChaushev.architects.model.validation.annotation.YearNotInTheFuture;
+import aChaushev.architects.validation.annotation.YearNotInTheFuture;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

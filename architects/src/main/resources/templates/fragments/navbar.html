@@ -62,7 +62,7 @@
             </li>
 
             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="/"  role="button"
+                <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                    th:classappend="${activeLink == 'events'}? 'active'"
                    th:text="#{nav_bar_events}"
@@ -115,34 +115,33 @@
                 <form id="logout-form" th:action="@{/users/logout}" method="post" style="display: none;"></form>
             </li>
 
-            <li class="nav-item">
-                <form class="nav-link" th:method="get">
-                    <label for="lang" th:text="#{nav_bar_language}">Language</label>
-                    <select
-                            id="lang"
-                            name="lang"
-                            onchange="this.form.submit()">
-                        <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
-                        <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
-                    </select>
-                </form>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{nav_bar_language}">
+                    Language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                    <a class="dropdown-item lang-option" href="#" data-value="en_US"
+                       th:selected="${#locale.toString()} == 'en_US'">English</a>
+                    <a class="dropdown-item lang-option" href="#" data-value="bg_BG"
+                       th:selected="${#locale.toString()} == 'bg_BG'">Български</a>
+                </div>
             </li>
-<!--todo: if have time -> en-bg do better dropdown menu design-->
-<!--            <li class="nav-item dropdown">-->
-<!--                <a class="nav-link dropdown-toggle" href="/" role="button"-->
-<!--                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                   th:text="#{nav_bar_language}">-->
-<!--                   Language-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu"-->
-<!--                     aria-labelledby="navbarDropdown"-->
-<!--                     id="lang"-->
-<!--                     name="lang"-->
-<!--                     onchange="this.form.submit()">-->
-<!--                    <a class="dropdown-item" href="/" value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</a>-->
-<!--                    <a class="dropdown-item" href="/" value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</a>-->
-<!--                </div>-->
-<!--            </li>-->
+
+            <form id="languageForm" method="get" style="display: none;">
+                <input type="hidden" name="lang" id="langInput">
+            </form>
+
+            <script>
+                document.querySelectorAll('.lang-option').forEach(item => {
+                    item.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        var langValue = this.getAttribute('data-value');
+                        document.getElementById('langInput').value = langValue;
+                        document.getElementById('languageForm').submit();
+                    });
+                });
+            </script>
+
 
         </ul>
     </div>

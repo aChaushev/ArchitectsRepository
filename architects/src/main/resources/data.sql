@@ -1,7 +1,7 @@
 -- Create roles table if not exists
 CREATE TABLE IF NOT EXISTS roles (
-     id INT PRIMARY KEY,
-     name VARCHAR(255) NOT NULL
+                                     id INT PRIMARY KEY,
+                                     name VARCHAR(255) NOT NULL
     );
 
 -- Insert roles
@@ -11,8 +11,8 @@ VALUES (1, 'USER'),
 
 -- Create users table if not exists
 CREATE TABLE IF NOT EXISTS users (
-    id INT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
+                                     id INT PRIMARY KEY,
+                                     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL
     );
@@ -43,9 +43,9 @@ VALUES (1, 1),
 
 -- Create project_types table if not exists
 CREATE TABLE IF NOT EXISTS project_types (
-    id INT PRIMARY KEY,
-    project_type_name VARCHAR(255) NOT NULL,
-    description VARCHAR(255) -- Changed from TEXT to VARCHAR
+                                             id INT PRIMARY KEY,
+                                             project_type_name VARCHAR(255) NOT NULL,
+    description TEXT
     );
 
 -- Insert project types
@@ -75,6 +75,9 @@ CREATE TABLE IF NOT EXISTS projects (
     );
 
 -- Insert projects
+INSERT INTO projects (id, description, imageurl, input_date, name, price, arch_project_type_id, architect_id)
+VALUES ('1', 'The Guggenheim Museum Bilbao is a museum of modern and contemporary art in Bilbao (Biscay), Spain. It is one of several museums affiliated to the Solomon R. Guggenheim Foundation and features permanent and visiting exhibits of works by Spanish and international artists.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Museo_Guggenheim%2C_Bilbao_%2831273245344%29.jpg/1920px-Museo_Guggenheim%2C_Bilbao_%2831273245344%29.jpg', '1997-10-18', 'Guggenheim Museum Bilbao', '230000000', '2', '1');
+
 INSERT INTO projects (id, description, imageurl, input_date, name, price, arch_project_type_id, architect_id)
 VALUES ('2', 'The Heydar Aliyev Center is a 57,500 m2 (619,000 sq ft) building complex in Baku, Azerbaijan, designed by Iraqi-British architect Zaha Hadid and noted for its distinctive architecture and flowing, curved style that eschews sharp angles.', 'https://api.gharpedia.com/wp-content/uploads/2019/02/Heydar-Aliyev-Cultural-Centre-by-Zaha-Hadid-01-0101070001.jpg', '2012-05-10', 'Heydar Aliyev Cultural Centre', '250000000', '2', '2');
 

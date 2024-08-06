@@ -1,4 +1,4 @@
-package aChaushev.architects.web;
+package aChaushev.architects.web.it;
 
 import aChaushev.architects.model.dto.ProjectAddDTO;
 import aChaushev.architects.model.dto.ProjectDTO;
@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -31,6 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class ProjectControllerIT {
 
     @Autowired
@@ -47,6 +49,10 @@ public class ProjectControllerIT {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Test
+    void contextLoads() {
+    }
 
     @BeforeEach
     public void setup() {

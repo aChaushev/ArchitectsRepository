@@ -1,5 +1,6 @@
-package aChaushev.architects.web;
+package aChaushev.architects.web.it;
 
+import aChaushev.architects.config.TestSecurityConfig;
 import aChaushev.architects.model.dto.UserDetailsDTO;
 import aChaushev.architects.model.entity.User;
 import aChaushev.architects.model.entity.UserRole;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
