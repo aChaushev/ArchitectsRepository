@@ -41,7 +41,6 @@ class AppUserDetailsServiceTest {
     @Test
     void testLoadUserByUsername_UserFound() {
 
-        // Arrange - приготвяме тестови данни
         User testUser = new User();
         testUser.setUsername(TEST_USERNAME);
         testUser.setPassword("123");
@@ -54,10 +53,8 @@ class AppUserDetailsServiceTest {
         when(mockUserRepository.findByUsername(TEST_USERNAME))
                 .thenReturn(Optional.of(testUser));
 
-        // Act - извикваме класа, който ще се тества
         UserDetails userDetails = toTest.loadUserByUsername(TEST_USERNAME);
 
-        // Assert - проверка дали реултата ни удовлетворява
         Assertions.assertInstanceOf(AppUserDetails.class, userDetails);
 
         AppUserDetails appUserDetails = (AppUserDetails) userDetails;

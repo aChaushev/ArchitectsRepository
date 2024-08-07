@@ -5,7 +5,6 @@ import aChaushev.architects.service.ProjectService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -24,11 +23,9 @@ public class HomeController {
                                Model model) {
 
         if (userDetails instanceof AppUserDetails appUserDetails) {
-            model.addAttribute("welcomeMessage", appUserDetails.getUsername()); // or
-            // getFullName()
+            model.addAttribute("welcomeMessage", appUserDetails.getUsername());
         } else {
           model.addAttribute("welcomeMessage", "");
-//            model.addAttribute("welcomeMessage", "Anonymous");
         }
 
         return "index";
@@ -40,24 +37,4 @@ public class HomeController {
         return "home";
     }
 
-//    @GetMapping("/home")
-//    public String getHomePage(Model model) {
-//        if (!loggedUser.isLogged()) {
-//            return "redirect:/";
-//        }
-//
-//        List<ProjectDTO> allProjects = projectService.getAllProjects();
-//        model.addAttribute("allProjects", allProjects);
-//
-//        List<ProjectDTO> currentArchitectProjects = projectService.getCurrentArchitectProjects(this.loggedUser.getId());
-//        model.addAttribute("currentArchitectProjects", currentArchitectProjects);
-//
-//        List<ProjectDTO> otherProjects = projectService.getOtherArchitectsProjects(this.loggedUser.getId());
-//        model.addAttribute("otherProjects", otherProjects);
-//
-//        List<ProjectDTO> favouriteProjects = projectService.getFavouriteProjects(this.loggedUser.getId());
-//        model.addAttribute("favouriteProjects", favouriteProjects);
-//
-//        return "home";
-//    }
 }

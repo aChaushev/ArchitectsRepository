@@ -26,7 +26,6 @@ public class CurrencyControllerIT {
   @Autowired
   private MockMvc mockMvc;
 
-  // Use only if really needed.
   @MockBean
   private ExRateService mockExRateService;
 

@@ -3,7 +3,6 @@ package aChaushev.architects.model.entity;
 import aChaushev.architects.model.enums.ArchProjectTypeName;
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity

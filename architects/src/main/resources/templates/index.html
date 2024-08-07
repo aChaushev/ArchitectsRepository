@@ -9,16 +9,11 @@
 <body>
 
 <div>
-<!--    <nav th:replace="~{fragments/navbar}"></nav>-->
     <nav th:replace="~{fragments/navbar::navbar(activeLink=${'home'})}"></nav>
 </div>
 
 <div class="container-fluid">
-<!--        <h5 class="text-center text-white mt-5">Welcome to Architects Repository,-->
-<!--            <th:block sec:authorize="isAuthenticated()" sec:authentication="name"></th:block>-->
-<!--            <th:block sec:authorize="!isAuthenticated()">Anonymous</th:block>-->
-<!--            !-->
-<!--        </h5>-->
+
     <h5 class="text-center text-white mt-5">
         <th:block th:text="#{index.page.welcome.msg} + ${welcomeMessage}"></th:block>!
     </h5>

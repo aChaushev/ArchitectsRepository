@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class ExRateServiceImpl implements ExRateService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ExRateServiceImpl.class);
-    // logger -> за логване на съобщения
     private final ExRateRepository exRateRepository;
     private final RestClient restClient;
     private final ForexApiConfig forexApiConfig;

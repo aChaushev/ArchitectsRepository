@@ -49,17 +49,6 @@ public class EventServiceImpl implements EventService {
         return eventDTOs;
     }
 
-//    @Override
-//    public List<EventDTO> getUserEvents(Long userId) {
-//        User user = userRepository.findById(userId).orElse(null);
-//        List<Event> events = this.eventRepository.findByUser(user);
-//        List<EventDTO> userEventDTOs = new ArrayList<>();
-//        for (Event event : events) {
-//            EventDTO userEvent = this.modelMapper.map(event, EventDTO.class);
-//            userEventDTOs.add(userEvent);
-//        }
-//        return userEventDTOs;
-//    }
 
     @Override
     public List<EventDTO> getUserEvents(Long userId) {

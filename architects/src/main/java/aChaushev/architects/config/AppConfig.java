@@ -18,7 +18,6 @@ public class AppConfig {
         return new ModelMapper();
     }
 
-    //за import на данни от data.sql
     @Bean
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource,
                                                        UserRoleRepository userRoleRepository,

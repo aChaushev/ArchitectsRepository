@@ -113,7 +113,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDTO> getFavouriteProjects(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            return Collections.emptyList(); // Handle user not found
+            return Collections.emptyList();
         }
         List<ProjectDTO> favouriteProjectsDTOs = new ArrayList<>();
         for (Project project : user.getFavouriteProjects()) {
@@ -130,17 +130,17 @@ public class ProjectServiceImpl implements ProjectService {
         Optional<Project> projectOpt = projectRepository.findById(projectId);
 
         if (userOpt.isEmpty() || projectOpt.isEmpty()) {
-            return; // Handle errors or notify user
+            return;
         }
 
         User user = userOpt.get();
         Project project = projectOpt.get();
 
-        // Check if the project is already in the user's favourites
+
         if (!user.getFavouriteProjects().contains(project)) {
             user.getFavouriteProjects().add(project);
             project.setFavorite(true); // This might not be necessary if the relationship is enough
-            userRepository.save(user); // Persist changes to the user
+            userRepository.save(user);
         }
     }
 
@@ -178,7 +178,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .findById(id)
                 .map(project -> {
                     ProjectDTO projectDTO = this.modelMapper.map(project, ProjectDTO.class);
-                    // Optionally, set the supported currencies to the ProjectDTO if needed
+
                     projectDTO.setAllCurrencies(filteredCurrencies);
                     return projectDTO;
                 })

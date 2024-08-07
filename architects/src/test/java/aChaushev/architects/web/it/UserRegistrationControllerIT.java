@@ -66,10 +66,10 @@ public class UserRegistrationControllerIT {
     @Test
     public void testRegisterUserWithErrors() throws Exception {
         UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
-        userRegisterDTO.setUsername("te"); // invalid username
-        userRegisterDTO.setEmail("testuser"); // invalid email
-        userRegisterDTO.setPassword("pass"); // invalid password length
-        userRegisterDTO.setConfirmPassword("password"); // passwords do not match
+        userRegisterDTO.setUsername("te");
+        userRegisterDTO.setEmail("testuser");
+        userRegisterDTO.setPassword("pass");
+        userRegisterDTO.setConfirmPassword("password");
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/users/register")
                         .flashAttr("userRegisterDTO", userRegisterDTO))

@@ -31,13 +31,13 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public String listUsers(Model model) {
         List<User> users = userService.findAllUsers();
-        // Convert to DTO with role names
+
         List<UserDetailsDTO> userDTOs = users.stream()
                 .map(user -> new UserDetailsDTO(
                         user.getId(),
                         user.getUsername(),
                         user.getEmail(),
-                        user.getRoles() // Ensure this is a List<UserRole>
+                        user.getRoles()
                 ))
                 .collect(Collectors.toList());
         model.addAttribute("users", userDTOs);
@@ -52,7 +52,7 @@ public class AdminController {
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO(user.getId(), user.getUsername(), user.getEmail(), user.getRoles());
 
         model.addAttribute("user", userDetailsDTO);
-        model.addAttribute("allRoles", Arrays.asList(UserRoleEnum.values())); // Provide all available roles
+        model.addAttribute("allRoles", Arrays.asList(UserRoleEnum.values()));
         return "admin/edit-user";
     }
 

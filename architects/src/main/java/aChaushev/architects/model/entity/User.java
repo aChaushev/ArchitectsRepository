@@ -23,7 +23,6 @@ public class User extends BaseEntity{
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private Set<Event> events;
 
-//  private boolean enabled = false;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
@@ -104,12 +103,5 @@ public class User extends BaseEntity{
     this.events = events;
   }
 
-//  public boolean isEnabled() {
-//    return enabled;
-//  }
-//
-//  public void setEnabled(boolean enabled) {
-//    this.enabled = enabled;
-//  }
 }
 

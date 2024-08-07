@@ -55,7 +55,6 @@ public class ProjectServiceImplTest {
     void setUp() {
         toTest = new ProjectServiceImpl(mockArchProjectTypeRepository, mockProjectRepository, mockModelMapper, mockUserRepository, mockExRateService);
 
-        // Use lenient stubbing for ModelMapper
         lenient().when(mockModelMapper.map(any(ProjectAddDTO.class), eq(Project.class))).thenAnswer(invocation -> {
             ProjectAddDTO dto = invocation.getArgument(0);
             Project project = new Project();

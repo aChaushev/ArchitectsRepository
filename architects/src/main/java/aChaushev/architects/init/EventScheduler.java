@@ -17,7 +17,7 @@ public class EventScheduler {
         this.eventRepository = eventRepository;
     }
 
-    //    @Scheduled(fixedRate = 86400000) // Executes every 24 hours (86400000 milliseconds)
+
     @Scheduled(fixedRate = 12 * 60 * 60 * 1000) // 12 hours in milliseconds
     public void deleteEventIfDateIsOld() {
         LocalDate now = LocalDate.now();

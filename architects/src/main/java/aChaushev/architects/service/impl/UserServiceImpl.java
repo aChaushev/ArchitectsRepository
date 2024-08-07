@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user, UserRoleEnum roleEnum) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setEnabled(true);
         UserRole userRole = userRoleRepository.findByRole(roleEnum)
                 .orElseThrow(() -> new IllegalArgumentException("Role not found: " + roleEnum));
         user.setRoles(List.of(userRole));
@@ -88,19 +87,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(Long id, UserDetailsDTO userDetails) {
-        // Find the existing user by ID
         User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        // Update fields
         user.setUsername(userDetails.getUsername());
         user.setEmail(userDetails.getEmail());
 
-        // Update the password if a new one is provided
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
 
-        // Save the updated user
         userRepository.save(user);
     }
 

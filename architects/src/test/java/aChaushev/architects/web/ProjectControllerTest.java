@@ -81,7 +81,7 @@ public class ProjectControllerTest {
         // Act and Assert
         mockMvc.perform(get("/project/all")
                         .with(SecurityMockMvcRequestPostProcessors.user("testUser").password("password").roles("USER"))
-                        .with(csrf())) // Add CSRF token if required
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("projects/all-projects"))
                 .andExpect(model().attributeExists("allProjects"))
@@ -207,7 +207,7 @@ public class ProjectControllerTest {
 
         mockMvc.perform(delete("/project/remove/1")
                         .with(SecurityMockMvcRequestPostProcessors.user(mockAppUserDetails)) // Set the mock user
-                        .with(csrf())) // Add CSRF token
+                        .with(csrf()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/project/all"));
 

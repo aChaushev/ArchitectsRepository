@@ -45,9 +45,6 @@
                             <td th:text="${myEvent.date}">{date}</td>
                             <td style="width: 15%">
                                 <a class="btn btn-info" th:href="@{/event/details/{id} (id = *{myEvent.id})}">Details</a>
-<!--                                <form th:method="delete" th:action="@{/event/remove/{id}(id=${myEvent.id})}" style="display:inline;">-->
-<!--                                    <input class="btn btn-info" type="submit" value="Delete"/>-->
-<!--                                </form>-->
                             </td>
                         </tr>
                         </tbody>
@@ -76,9 +73,7 @@
                                 </div>
                                 <div class="ml-auto">
                                     <a class="btn btn-info" th:href="@{/event/details/{id} (id = *{event.id})}">Details</a>
-<!--                                    <form th:method="delete" th:action="@{/event/remove/{id}(id=${event.id})}" th:if="${event.user.id == #authentication.principal.id}" style="display:inline;">-->
-<!--                                        <input class="btn btn-info" type="submit" value="Delete"/>-->
-<!--                                    </form>-->
+
                                 </div>
                             </div>
                         </li>

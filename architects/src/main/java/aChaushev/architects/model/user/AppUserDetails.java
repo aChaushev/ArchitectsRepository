@@ -13,9 +13,6 @@ public class AppUserDetails extends User {
     public AppUserDetails(String username, String password,
                           Collection<? extends GrantedAuthority> authorities, Long id, String email) {
         super(username, password, authorities);
-        //        super(Objects.requireNonNull(username, "Username cannot be null"),
-        //                Objects.requireNonNull(password, "Password cannot be null"),
-        //                Objects.requireNonNull(authorities, "Authorities cannot be null"));
         this.id = id;
         this.email = email;
     }

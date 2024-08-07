@@ -44,7 +44,6 @@ public class EventServiceImplTest {
     void setUp() {
         toTest = new EventServiceImpl(mockEventRepository, mockModelMapper, mockUserRepository);
 
-        // Use lenient stubbing for ModelMapper
         lenient().when(mockModelMapper.map(any(EventAddDTO.class), eq(Event.class))).thenAnswer(invocation -> {
             EventAddDTO dto = invocation.getArgument(0);
             Event event = new Event();

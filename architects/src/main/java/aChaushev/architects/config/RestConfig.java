@@ -13,7 +13,7 @@ public class RestConfig {
         return RestClient.create();
     }
 
-    //    //for REST API
+    //for REST API
     @Bean("offersRestClient")
     public RestClient offersRestClient(OfferApiConfig offersApiConfig) {
         return RestClient

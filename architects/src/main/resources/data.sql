@@ -1,7 +1,7 @@
 -- Create roles table if not exists
 CREATE TABLE IF NOT EXISTS roles (
-                                     id INT PRIMARY KEY,
-                                     name VARCHAR(255) NOT NULL
+    id INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
     );
 
 -- Insert roles
@@ -11,8 +11,8 @@ VALUES (1, 'USER'),
 
 -- Create users table if not exists
 CREATE TABLE IF NOT EXISTS users (
-                                     id INT PRIMARY KEY,
-                                     email VARCHAR(255) NOT NULL,
+    id INT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL
     );
@@ -28,9 +28,9 @@ VALUES ('3', 'u3@u3', '973e0c11e0d9c3539ed25890752aca05ad2b7254659df78cea1b7f597
 
 -- Create users_roles table if not exists
 CREATE TABLE IF NOT EXISTS users_roles (
-                                           user_id INT,
-                                           role_id INT,
-                                           FOREIGN KEY (user_id) REFERENCES users(id),
+    user_id INT,
+    role_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
     );
 
@@ -43,8 +43,8 @@ VALUES (1, 1),
 
 -- Create project_types table if not exists
 CREATE TABLE IF NOT EXISTS project_types (
-                                             id INT PRIMARY KEY,
-                                             project_type_name VARCHAR(255) NOT NULL,
+    id INT PRIMARY KEY,
+    project_type_name VARCHAR(255) NOT NULL,
     description TEXT
     );
 
@@ -62,9 +62,9 @@ VALUES (5, 'URBAN', 'Urban design architect takes on the challenge of building f
 
 -- Create projects table if not exists
 CREATE TABLE IF NOT EXISTS projects (
-                                        id INT PRIMARY KEY,
-                                        description TEXT,
-                                        imageurl VARCHAR(255),
+    id INT PRIMARY KEY,
+    description TEXT,
+    imageurl VARCHAR(255),
     input_date DATE,
     name VARCHAR(255),
     price DECIMAL(15, 2),

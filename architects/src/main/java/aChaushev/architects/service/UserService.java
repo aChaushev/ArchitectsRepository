@@ -1,10 +1,8 @@
 package aChaushev.architects.service;
 
 import aChaushev.architects.model.dto.UserDetailsDTO;
-import aChaushev.architects.model.dto.UserLoginDTO;
 import aChaushev.architects.model.dto.UserRegisterDTO;
 import aChaushev.architects.model.entity.User;
-import aChaushev.architects.model.entity.UserRole;
 import aChaushev.architects.model.enums.UserRoleEnum;
 
 import java.util.List;
@@ -25,5 +23,4 @@ public interface UserService {
 
     void updateUser(Long id, UserDetailsDTO userDetails);
 
-//    List<UserRole> getAllRoles();
 }
